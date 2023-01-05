@@ -4,8 +4,60 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, Appdispatch } from "../../redux/store";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+
 import getCountryData from "../../thunk/country";
 import Country from "../../types/type";
+
+// MUI grid column definition
+const columns: GridColDef[] = [
+  {
+    field: "attributeFlag",
+    headerName: "Flag",
+    width: 100,
+    editable: false,
+    valueGetter: (params) => {
+      return params.getValue(params.id, "flags").png;
+    },
+    renderCell: (params) => {
+      return (
+        <>
+          <img src={params.value} height="30" />
+        </>
+      );
+    },
+  },
+  {
+    field: "attributeName",
+    headerName: "Name",
+    valueGetter: (params) => {
+      return params.getValue(params.id, "name").common;
+    },
+    width: 300,
+    editable: true,
+  },
+  {
+    field: "region",
+    headerName: "Region",
+    width: 150,
+    editable: true,
+  },
+  {
+    field: "population",
+    headerName: "Population",
+    width: 150,
+    editable: true,
+  },
+  {
+    field: "languages",
+    headerName: "Languages",
+    width: 150,
+    editable: true,
+    // valueGetter: (params) => {
+    //   return params.getValue(params.id, "languages");
+    // },
+  },
+];
 
 function CountryDetail() {
   const [countryDetail, setCountryDetail] = useState<Country[]>([]);
@@ -35,7 +87,7 @@ function CountryDetail() {
       <p>This is product detail.</p>
       {countryDetail.map((item) => {
         return (
-          <div>
+          <React.Fragment>
             <p>{item.name.common}</p>
             <p>{item.population}</p>
             <img src={item.flags.png} alt="flag" height="50px" width="100px" />
@@ -48,7 +100,7 @@ function CountryDetail() {
                   );
                 })
               : null}
-          </div>
+          </React.Fragment>
         );
       })}
       <Link to="/">

@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
+import SearchForm from "../components/search/searchform/SearchForm";
 import CountryList from "../components/country/countrylist/CountryList";
 import Loading from "../components/loading/Loading";
 import SearchHandler from "../components/search/searchhandler/SearchHandler";
@@ -27,6 +28,7 @@ const Home = () => {
   // }
   return (
     <div>
+      <SearchForm />
       <SearchHandler />
     </div>
   );

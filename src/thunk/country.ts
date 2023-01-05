@@ -13,10 +13,6 @@ const getCountryData = () => {
     const response = await fetch(url);
     const countryData = await response.json();
     dispatch(countryListActions.getCountryData(countryData));
-
-    // finally {
-    //   dispatch(countryListActions.isPending(false));
-    // }
   };
 };
 export default getCountryData;

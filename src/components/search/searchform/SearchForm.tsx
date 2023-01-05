@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store";
 
@@ -17,19 +17,21 @@ const SearchForm = () => {
   const getUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(userInputActions.getUserInput(e.target.value));
   };
+
   console.log(userInput, "input from form");
   //   onSearch handler
   return (
-    <div>
+    <Box sx={{ ml: 70, mt: 3, width: "80%" }}>
       <TextField
         variant="standard"
         onChange={getUserInput}
         label="Search"
+        value={userInput}
       ></TextField>
       {/* {filteredCountry.map((item) => {
         return <p>{item.name.common}</p>;
       })} */}
-    </div>
+    </Box>
   );
 };
 

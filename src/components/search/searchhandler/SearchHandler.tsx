@@ -9,6 +9,7 @@ import Country from "../../../types/type";
 import SearchForm from "../searchform/SearchForm";
 import CountryList from "../../country/countrylist/CountryList";
 import { countryListActions } from "../../../redux/slice/countrySlice";
+import { userInputActions } from "../../../redux/slice/userInputSlice";
 
 const SearchHandler = () => {
   // get userInput from store

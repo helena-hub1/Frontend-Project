@@ -1,30 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
+import { pink, red } from "@mui/material/colors";
+import Badge from "@mui/material/Badge";
+import { useSelector } from "react-redux";
+import MenuIcon from "@mui/icons-material/Menu";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
+import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
-import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
+import MoreIcon from "@mui/icons-material/MoreVert";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import MoreIcon from "@mui/icons-material/MoreVert";
-import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
-import { useSelector } from "react-redux";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import Switch from "@mui/material/Switch";
-import { FormControlLabel } from "@mui/material";
-import orange from "@mui/material/colors/orange";
 
 import { RootState } from "../../redux/store";
-import { Link } from "react-router-dom";
-import { url } from "inspector";
+import "./FooterBar.css";
 
 //MUI home Icon
 const HomeIcon = (props: SvgIconProps) => {
@@ -34,43 +32,13 @@ const HomeIcon = (props: SvgIconProps) => {
     </SvgIcon>
   );
 };
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
-// NavBar color
-const styles = {
-  customColor: {
-    backgroundColor: orange[500],
-  },
-};
 
-// const pages = [
-//   { name: "Home", url: "/" },
-//   { name: "About", url: "/about" },
-//   { name: "Contact", url: "/contact" },
-// ];
-const NavBar = () => {
-  // Badge state
-  const [invisible, setInvisible] = useState(false);
-  // Badge visibility handler
-  const handleBadgeVisibility = () => {
-    setInvisible(!invisible);
-  };
-
-  // Get favarite list
+// MUI material
+const FootBar = () => {
   const favoriteList = useSelector(
     (state: RootState) => state.favorite.favoriteList
   );
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -95,28 +63,6 @@ const NavBar = () => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
-
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
@@ -134,24 +80,7 @@ const NavBar = () => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {/* <MenuItem>
-        <IconButton size="large" aria-label="show home page" color="inherit">
-          <HomeIcon />
-        </IconButton>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show favorite list length"
-          color="inherit"
-        >
-          <Badge badgeContent={favoriteList.length} color="error">
-            <FavoriteIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem> */}
-      {/* <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
           aria-label="account of current user"
@@ -159,16 +88,16 @@ const NavBar = () => {
           aria-haspopup="true"
           color="inherit"
         >
-          <AccountCircle />
+          {/* <WorldIcon /> */}
         </IconButton>
         <p>Profile</p>
-      </MenuItem> */}
+      </MenuItem>
     </Menu>
   );
-
+  // render
   return (
-    <Box sx={{ flexGrow: 1, m: 1 }}>
-      <AppBar sx={styles.customColor} position="static">
+    <Box sx={{ flexGrow: 1, m: 1, position: "sticky" }}>
+      <AppBar position="static">
         <Toolbar>
           <IconButton
             size="large"
@@ -192,45 +121,26 @@ const NavBar = () => {
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
               size="large"
-              aria-label="show Home page"
-              color="inherit"
+              aria-label="show 4 new mails"
+              color="default"
             >
               <Link to="/">
-                <HomeIcon sx={{ color: "white" }} />
+                <HomeIcon />
               </Link>
             </IconButton>
-
-            <div>
-              <Badge
-                color="secondary"
-                invisible={invisible}
-                badgeContent={favoriteList.length}
-              >
-                <Link to="/favorite">
-                  <FavoriteIcon sx={{ color: "white" }} />
-                </Link>
-              </Badge>
-              <FormControlLabel
-                sx={{ color: "text.primary" }}
-                control={
-                  <Switch
-                    checked={!invisible}
-                    onChange={handleBadgeVisibility}
-                  />
-                }
-                label="On/Off"
-              />
-            </div>
             <IconButton
               size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              aria-label="show 17 new notifications"
               color="inherit"
             >
-              <AccountCircle />
+              <Badge
+                badgeContent={favoriteList.length}
+                sx={{ color: red[500] }}
+              >
+                <Link to="/favorite">
+                  <FavoriteIcon />
+                </Link>
+              </Badge>
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
@@ -248,8 +158,8 @@ const NavBar = () => {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-      {renderMenu}
     </Box>
   );
 };
-export default NavBar;
+
+export default FootBar;
