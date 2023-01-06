@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router";
-import { useSelector, useDispatch } from "react-redux";
 
+import "./App.css";
 import CountryList from "./components/country/countrylist/CountryList";
 import NavBar from "./components/navbar/NavBar";
-import FooterBar from "./components/footbar/FooterBar";
+import FooterBar from "./components/footbar/FootBar";
 import Favorite from "./pages/Favorite";
 import Home from "./pages/Home";
 import SearchForm from "./components/search/searchform/SearchForm";
@@ -14,6 +14,7 @@ import SearchHandler from "./components/search/searchhandler/SearchHandler";
 import CountryDetail from "./components/country/CountryDetail";
 
 function App() {
+  // render
   return (
     <div className="App">
       <NavBar />

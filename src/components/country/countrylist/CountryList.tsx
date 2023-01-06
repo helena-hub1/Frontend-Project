@@ -9,16 +9,33 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import { styled, alpha } from "@mui/material/styles";
+import IconButton from "@mui/material/IconButton";
+import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
+import { Link } from "react-router-dom";
 
 import { Appdispatch, RootState } from "../../../redux/store";
 import { useDispatch } from "react-redux/es/exports";
 import CountryItem from "../countryitem/CountryItem";
 import Country from "../../../types/type";
 import "./CountryList.css";
+
 // Prop type
 type Prop = {
   result: Country[];
 };
+
+const TableHeadStyled = styled(TableHead)`
+  &:nth-of-type(odd) {
+    background-color: darksalmon;
+  }
+  &:nth-of-type(even) {
+    background-color: rgb(180, 115, 115);
+  }
+  & > td {
+    color: black;
+  }
+`;
 const CountryList = ({ result }: Prop) => {
   // MUI state
   const [open, setOpen] = useState(false);
@@ -37,14 +54,14 @@ const CountryList = ({ result }: Prop) => {
     return 0;
   });
   return (
-    <TableContainer component={Paper} sx={{ mt: 5, ml: 20, width: "80%" }}>
+    <TableContainer component={Paper} sx={{ mt: 10, ml: 12, width: "80%" }}>
       <Table
         sx={{ minWidth: 700 }}
         aria-label="customized table"
         className="CountryTable"
       >
         {/* <Table aria-label="simple table"> */}
-        <TableHead>
+        <TableHead sx={{ background: "rgb(180, 115, 115)" }}>
           <TableRow>
             <TableCell align="center" sx={{ fontWeight: "bold" }}>
               Flag

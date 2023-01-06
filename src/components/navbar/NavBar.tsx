@@ -16,15 +16,14 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Switch from "@mui/material/Switch";
 import { FormControlLabel } from "@mui/material";
-import orange from "@mui/material/colors/orange";
+import { iconColorActions } from "../../redux/slice/IconColorSlice";
 
 import { RootState } from "../../redux/store";
 import { Link } from "react-router-dom";
-import { url } from "inspector";
 
 //MUI home Icon
 const HomeIcon = (props: SvgIconProps) => {
@@ -50,15 +49,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 // NavBar color
 const styles = {
   customColor: {
-    backgroundColor: orange[500],
+    backgroundColor: "darksalmon",
   },
 };
 
-// const pages = [
-//   { name: "Home", url: "/" },
-//   { name: "About", url: "/about" },
-//   { name: "Contact", url: "/contact" },
-// ];
 const NavBar = () => {
   // Badge state
   const [invisible, setInvisible] = useState(false);
@@ -71,6 +65,15 @@ const NavBar = () => {
   const favoriteList = useSelector(
     (state: RootState) => state.favorite.favoriteList
   );
+  // Get Icon state
+  const homeIconColor = useSelector(
+    (state: RootState) => state.iconColor.homeIconColor
+  );
+  const favoriteIconColor = useSelector(
+    (state: RootState) => state.iconColor.favoriteIconColor
+  );
+  const dispatch = useDispatch();
+  console.log(homeIconColor);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -95,28 +98,6 @@ const NavBar = () => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
-
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
@@ -133,39 +114,9 @@ const NavBar = () => {
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
-    >
-      {/* <MenuItem>
-        <IconButton size="large" aria-label="show home page" color="inherit">
-          <HomeIcon />
-        </IconButton>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show favorite list length"
-          color="inherit"
-        >
-          <Badge badgeContent={favoriteList.length} color="error">
-            <FavoriteIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem> */}
-      {/* <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem> */}
-    </Menu>
+    ></Menu>
   );
-
+  // render
   return (
     <Box sx={{ flexGrow: 1, m: 1 }}>
       <AppBar sx={styles.customColor} position="static">
@@ -196,59 +147,39 @@ const NavBar = () => {
               color="inherit"
             >
               <Link to="/">
-                <HomeIcon sx={{ color: "white" }} />
+                <HomeIcon
+                  sx={{ color: homeIconColor, mr: 3 }}
+                  onClick={() => dispatch(iconColorActions.setHomeIconColor())}
+                />
               </Link>
             </IconButton>
 
-            <div>
+            <Box sx={{ mt: 1 }}>
               <Badge
                 color="secondary"
                 invisible={invisible}
                 badgeContent={favoriteList.length}
               >
                 <Link to="/favorite">
-                  <FavoriteIcon sx={{ color: "white" }} />
+                  <FavoriteIcon
+                    sx={{ color: favoriteIconColor }}
+                    onClick={() =>
+                      dispatch(iconColorActions.setFavoriteIconColor())
+                    }
+                  />
                 </Link>
               </Badge>
-              <FormControlLabel
-                sx={{ color: "text.primary" }}
-                control={
-                  <Switch
-                    checked={!invisible}
-                    onChange={handleBadgeVisibility}
-                  />
-                }
-                label="On/Off"
+              <Switch
+                checked={!invisible}
+                onChange={handleBadgeVisibility}
+                color="warning"
+                sx={{ ml: 1 }}
               />
-            </div>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
+            </Box>
           </Box>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-      {renderMenu}
     </Box>
   );
 };

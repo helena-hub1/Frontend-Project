@@ -1,3 +1,4 @@
+// Type
 type Country = {
   name: {
     common: string;
@@ -9,10 +10,18 @@ type Country = {
     png: string;
     svg: string;
   };
-  capital: string[];
-  //   generic type parameter for attributes
-  //   { [indexName: KeyType]: ValueType }.
+  capital: string;
   languages: { [key: string]: string };
-  lating: string[];
+  latlng: string[];
+  maps: {
+    googleMaps: string;
+    openStreetMaps: string;
+  };
+  car: {
+    signs: string;
+    side: string;
+  };
+  continents: string;
+  timezones: string;
 };
 export default Country;

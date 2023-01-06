@@ -1,21 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { Link } from "react-router-dom";
-import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useSelector, useDispatch } from "react-redux";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import { ListItem, TableBody } from "@mui/material";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import { ListItem } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import Typography from "@mui/material/Typography";
-import Table from "@mui/material/Table";
-
-import TableHead from "@mui/material/TableHead";
+import { styled } from "@mui/material/styles";
+import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
 
 import Country from "../../../types/type";
 import { RootState } from "../../../redux/store";
@@ -26,14 +20,36 @@ import "./CountryItem.css";
 type Prop = {
   item: Country;
 };
+// HomeIcon
+const HomeIcon = (props: SvgIconProps) => {
+  return (
+    <SvgIcon {...props}>
+      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+    </SvgIcon>
+  );
+};
+// table row color
+const TableRowStyled = styled(TableRow)`
+  &:nth-of-type(odd) {
+    background-color: darksalmon;
+  }
+  &:nth-of-type(even) {
+    background-color: rgb(180, 115, 115);
+  }
+  & > td {
+    color: black;
+  }
+`;
+
 const CountryItem = ({ item }: Prop) => {
+  console.log(item);
   // get the favoriteList from store
   const favoriteList = useSelector(
     (state: RootState) => state.favorite.favoriteList
   );
   // favoriteColor state
   const [favoriteColor, setFavoriteColor] = useState("black");
-  // MUI snack bar state
+  // MUI snackbar state
   const [open, setOpen] = useState(false);
   const handleClick = () => {
     setOpen(true);
@@ -48,19 +64,26 @@ const CountryItem = ({ item }: Prop) => {
     setOpen(false);
   };
   // MUI
-
+  // Detail Icon state
   const [openExpand, setOpenExpand] = useState(false);
 
   const dispatch = useDispatch();
   // Add to favoriteCountryList
   const AddToFavoriteHandler = () => {
-    dispatch(favoriteActions.addFavorite(item));
-    setFavoriteColor("red");
+    const index = favoriteList.findIndex(
+      (favItem) => favItem.name.common === item.name.common
+    );
+    if (index !== -1) {
+      handleClick();
+    } else {
+      dispatch(favoriteActions.addFavorite(item));
+      setFavoriteColor("red");
+    }
   };
   // render
   return (
-    <React.Fragment>
-      <TableRow>
+    <Fragment>
+      <TableRowStyled>
         <TableCell align="center">
           <img src={item.flags.png} height="30" alt="flag"></img>
         </TableCell>
@@ -85,65 +108,26 @@ const CountryItem = ({ item }: Prop) => {
               })
             : null}
         </TableCell>
+
         <TableCell align="right">
           <FavoriteIcon
             onClick={AddToFavoriteHandler}
             sx={{ color: favoriteColor }}
           />
-          <Snackbar
-            open={openExpand}
-            autoHideDuration={6000}
-            onClose={handleClose}
-          >
-            <Alert severity="warning">The title has already been added!</Alert>
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert severity="warning">
+              This country has already been added to the favorite page!
+            </Alert>
           </Snackbar>
         </TableCell>
-        <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? (
-              <Link to={`/name/${item.name.common}`}>
-                <KeyboardArrowRightIcon sx={{ color: "blue" }} />
-              </Link>
-            ) : (
-              <KeyboardArrowLeftIcon />
-            )}
-          </IconButton>
+
+        <TableCell align="right">
+          <Link to={`/name/${item.name.common}`}>
+            <KeyboardArrowRightIcon sx={{ color: "white" }} />
+          </Link>
         </TableCell>
-      </TableRow>
-      {/* Expand content */}
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography variant="body2" gutterBottom component="div">
-                Click the arrow for Country Detail!
-              </Typography>
-              {/* <Table size="small" aria-label="countryhistory">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Flag</TableCell>
-                    <TableCell align="right">Name</TableCell>
-                    <TableCell align="right">Population</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow key={item.name.common}>
-                    <TableCell component="th" scope="row">
-                      <img src={item.flags.png}></img>
-                    </TableCell>
-                    <TableCell>{item.name.common}</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table> */}
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </React.Fragment>
+      </TableRowStyled>
+    </Fragment>
   );
 };
 export default CountryItem;

@@ -3,7 +3,7 @@ import { title } from "process";
 
 import Country from "../../types/type";
 
-// initialState type
+// type
 type initialState = {
   favoriteList: Country[];
 };
@@ -37,6 +37,7 @@ const favoriteSlice = createSlice({
     },
   },
 });
-// export our reducer and actions
+//  actions
 export const favoriteActions = favoriteSlice.actions;
+// reducer
 export default favoriteSlice.reducer;

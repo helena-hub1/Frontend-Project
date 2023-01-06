@@ -2,8 +2,19 @@ import { useSelector } from "react-redux";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import { ListItem } from "@mui/material";
+import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
+import { Link, useParams } from "react-router-dom";
+import IconButton from "@mui/material/IconButton";
 
 import { RootState } from "../../../redux/store";
+// HomeIcon
+const HomeIcon = (props: SvgIconProps) => {
+  return (
+    <SvgIcon {...props}>
+      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+    </SvgIcon>
+  );
+};
 
 // MUI grid column definition
 const columns: GridColDef[] = [
@@ -45,7 +56,7 @@ const columns: GridColDef[] = [
     editable: true,
   },
   {
-    field: "attributeName",
+    field: "attributeLanguage",
     headerName: "Languages",
     width: 150,
     editable: true,
@@ -62,14 +73,14 @@ const FavoriteList = () => {
   );
   // render
   return (
-    <Box sx={{ height: 500, width: "80%", mt: 5 }}>
+    <Box sx={{ height: 500, width: "80%", mt: 5, minHeight: 100 }}>
       <DataGrid
         rows={favoriteList}
         columns={columns}
         getRowId={(row) => row.name.common}
         pageSize={15}
         rowsPerPageOptions={[15]}
-        sx={{ ml: 40 }}
+        sx={{ ml: 20, width: "80%" }}
       />
     </Box>
   );
