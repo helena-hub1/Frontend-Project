@@ -1,94 +1,124 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import { styled, alpha } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
-import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
-import { Link } from "react-router-dom";
+import Paper from "@mui/material/Paper";
+import TableSortLabel from "@mui/material/TableSortLabel";
+import { useDispatch, useSelector } from "react-redux";
 
-import { Appdispatch, RootState } from "../../../redux/store";
-import { useDispatch } from "react-redux/es/exports";
+import getCountryData from "../../../thunk/country";
+import { RootState, Appdispatch } from "../../../redux/store";
 import CountryItem from "../countryitem/CountryItem";
+import Loading from "../../loading/Loading";
 import Country from "../../../types/type";
-import "./CountryList.css";
+// type
+type OrderBy = "asc" | "desc";
 
-// Prop type
-type Prop = {
-  result: Country[];
-};
+const CountryList = () => {
+  //  state
+  const countryList = useSelector(
+    (state: RootState) => state.country.countryList
+  );
+  const isLoading = useSelector((state: RootState) => state.country.isLoading);
+  const [sortCountryData, setSortCountryData] =
+    useState<Country[]>(countryList);
+  const [orderDirection, setOrderDirection] = useState<"asc" | "desc">("asc");
 
-const TableHeadStyled = styled(TableHead)`
-  &:nth-of-type(odd) {
-    background-color: darksalmon;
-  }
-  &:nth-of-type(even) {
-    background-color: rgb(180, 115, 115);
-  }
-  & > td {
-    color: black;
-  }
-`;
-const CountryList = ({ result }: Prop) => {
-  // MUI state
-  const [open, setOpen] = useState(false);
+  //dispatch
+  const dispatch = useDispatch<Appdispatch>();
 
-  // Sorting
-  const sortedCountry = [...result];
-  const sorted = sortedCountry.sort((a, b) => {
-    if (a.name.common > b.name.common) {
-      return 1;
+  // get country data
+  useEffect(() => {
+    dispatch(getCountryData());
+  }, [dispatch]);
+
+  // sort logic
+  const sortData = (countryData: Country[], orderBy: OrderBy) => {
+    // switch
+    switch (orderBy) {
+      case "asc":
+      default:
+        return countryData.sort((a, b) =>
+          a.name.common > b.name.common
+            ? 1
+            : b.name.common > a.name.common
+            ? -1
+            : 0
+        );
+      case "desc":
+        return countryData.sort((a, b) =>
+          a.name.common < b.name.common
+            ? 1
+            : b.name.common < a.name.common
+            ? -1
+            : 0
+        );
     }
-
-    if (a.name.common < b.name.common) {
-      return -1;
-    }
-
-    return 0;
-  });
+  };
+  const dataForSort = [...countryList];
+  const onSortClickHandler = () => {
+    setSortCountryData(sortData(dataForSort, orderDirection));
+    setOrderDirection(orderDirection === "asc" ? "desc" : "asc");
+  };
+  //Loading
+  if (isLoading) {
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  }
+  // render
   return (
-    <TableContainer component={Paper} sx={{ mt: 10, ml: 12, width: "80%" }}>
-      <Table
-        sx={{ minWidth: 700 }}
-        aria-label="customized table"
-        className="CountryTable"
-      >
-        {/* <Table aria-label="simple table"> */}
-        <TableHead sx={{ background: "rgb(180, 115, 115)" }}>
-          <TableRow>
-            <TableCell align="center" sx={{ fontWeight: "bold" }}>
-              Flag
-            </TableCell>
-            <TableCell align="center" sx={{ fontWeight: "bold" }}>
-              Name
-            </TableCell>
-            <TableCell align="center" sx={{ fontWeight: "bold" }}>
-              Region
-            </TableCell>
-            <TableCell align="center" sx={{ fontWeight: "bold" }}>
-              Population
-            </TableCell>
-            <TableCell align="left" sx={{ fontWeight: "bold" }}>
-              Languages
-            </TableCell>
-            <TableCell align="right" sx={{ fontWeight: "bold" }}></TableCell>
-            <TableCell align="right" sx={{ fontWeight: "bold" }}></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody sx={{ width: "100%" }}>
-          {sorted.map((item) => (
-            <CountryItem key={crypto.randomUUID()} item={item} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div className="country_list">
+      <Typography variant="h5" sx={{ textAlign: "center", mt: 14 }}>
+        Country List
+      </Typography>
+      <TableContainer component={Paper} sx={{ mt: 4, ml: 12, width: "80%" }}>
+        <Table
+          sx={{ minWidth: 700 }}
+          aria-label="customized table"
+          className="search-table"
+        >
+          <TableHead sx={{ background: "rgb(180, 115, 115)" }}>
+            <TableRow>
+              <TableCell sx={{ fontWeight: "bold" }}>Flag</TableCell>
+              <TableCell
+                onClick={() => {
+                  onSortClickHandler();
+                }}
+                align="center"
+                sx={{ fontWeight: "bold" }}
+              >
+                <TableSortLabel active={true} direction={orderDirection}>
+                  Name
+                </TableSortLabel>
+              </TableCell>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                Region
+              </TableCell>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                Population
+              </TableCell>
+              <TableCell align="left" sx={{ fontWeight: "bold" }}>
+                Languages
+              </TableCell>
+              <TableCell align="right"></TableCell>
+              <TableCell align="right"></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {sortCountryData.map((item, index) => (
+              <CountryItem key={index} item={item} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 };
 

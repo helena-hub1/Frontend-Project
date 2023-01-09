@@ -1,10 +1,9 @@
-import React from "react";
-import FavoriteList from "../components/favoriteCountry/favoritelist/FavoriteList";
+import FavoriteList from "../components/favoritecountry/favoritelist/FavoriteList";
 
 const Favorite = () => {
   // render
   return (
-    <div>
+    <div className="favorite">
       <FavoriteList />
     </div>
   );

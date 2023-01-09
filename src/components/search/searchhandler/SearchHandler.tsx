@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableContainer from "@mui/material/TableContainer";
+import Paper from "@mui/material/Paper";
 
 import { RootState, Appdispatch } from "../../../redux/store";
 import Loading from "../../loading/Loading";
 import getCountryData from "../../../thunk/country";
 import Country from "../../../types/type";
-import CountryList from "../../country/countrylist/CountryList";
+import SearchHandlerItem from "./SearchHandlerItem";
 
 const SearchHandler = () => {
   // state
@@ -15,16 +19,15 @@ const SearchHandler = () => {
   const countryList = useSelector(
     (state: RootState) => state.country.countryList
   );
-  console.log(isLoading, "loading from searchhandler");
-  //dispact
+
+  //dispatch
   const dispatch = useDispatch<Appdispatch>();
 
-  // manage the effect
+  // manage effect
   useEffect(() => {
     dispatch(getCountryData());
   }, [dispatch]);
 
-  // search logic
   useEffect(() => {
     const filtered = countryList.filter(
       (item) =>
@@ -32,13 +35,6 @@ const SearchHandler = () => {
     );
     setFilteredCountry(filtered);
   }, [userInput]);
-
-  let result;
-  if (userInput === "") {
-    result = countryList;
-  } else {
-    result = filteredCountry;
-  }
   // render
   if (isLoading) {
     return (
@@ -47,10 +43,21 @@ const SearchHandler = () => {
       </div>
     );
   }
-  // render
   return (
-    <div>
-      <CountryList result={result} />
+    <div className="search_handler">
+      <TableContainer component={Paper} sx={{ mt: 10, ml: 12, width: "80%" }}>
+        <Table
+          sx={{ minWidth: 700 }}
+          aria-label="customized table"
+          className="search-table"
+        >
+          <TableBody>
+            {filteredCountry.map((item, index) => (
+              <SearchHandlerItem key={index} item={item} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 };

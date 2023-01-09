@@ -1,4 +1,5 @@
 import React, { useState, Fragment } from "react";
+import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useSelector, useDispatch } from "react-redux";
@@ -8,17 +9,18 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { ListItem } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import { styled } from "@mui/material/styles";
 
-import Country from "../../../types/type";
 import { RootState } from "../../../redux/store";
+import Country from "../../../types/type";
 import { favoriteActions } from "../../../redux/slice/favoriteSlice";
+import { iconColorActions } from "../../../redux/slice/iconColorSlice";
 
 // type
 type Prop = {
   item: Country;
 };
-// table row color
+
+// tablerowsstyled
 const TableRowStyled = styled(TableRow)`
   &:nth-of-type(odd) {
     background-color: darksalmon;
@@ -30,17 +32,17 @@ const TableRowStyled = styled(TableRow)`
     color: black;
   }
 `;
-
-const CountryItem = ({ item }: Prop) => {
+const SearchHandlerItem = ({ item }: Prop) => {
   // state
   const favoriteList = useSelector(
     (state: RootState) => state.favorite.favoriteList
   );
-  const [favoriteColor, setFavoriteColor] = useState("white");
-  // dispatch
-  const dispatch = useDispatch();
+  const favoriteIconColor = useSelector(
+    (state: RootState) => state.iconColor.favoriteIconColor
+  );
   // MUI snackbar state
   const [open, setOpen] = useState(false);
+  // snakbar handler
   const handleClick = () => {
     setOpen(true);
   };
@@ -53,20 +55,42 @@ const CountryItem = ({ item }: Prop) => {
     }
     setOpen(false);
   };
-  // Add favorite
-  const AddToFavoriteHandler = () => {
+  //   dispatch
+  const dispatch = useDispatch();
+
+  //   Add favorite
+  const addToFavoriteHandler = () => {
     const index = favoriteList.findIndex(
       (favItem) => favItem.name.common === item.name.common
     );
     if (index === -1) {
       handleClick();
       dispatch(favoriteActions.addFavorite(item));
-      setFavoriteColor("red");
+      dispatch(iconColorActions.setFavoriteIconColor());
     }
   };
-  // render
+  //   render
   return (
     <Fragment>
+      <TableRow sx={{ background: "rgb(180, 115, 115)", mt: 1 }}>
+        <TableCell align="left" sx={{ fontWeight: "bold" }}>
+          Flag
+        </TableCell>
+        <TableCell align="center" sx={{ fontWeight: "bold" }}>
+          Name
+        </TableCell>
+        <TableCell align="center" sx={{ fontWeight: "bold" }}>
+          Region
+        </TableCell>
+        <TableCell align="center" sx={{ fontWeight: "bold" }}>
+          Population
+        </TableCell>
+        <TableCell align="left" sx={{ fontWeight: "bold" }}>
+          Languages
+        </TableCell>
+        <TableCell align="right"></TableCell>
+        <TableCell align="right"></TableCell>
+      </TableRow>
       <TableRowStyled>
         <TableCell align="center">
           <img src={item.flags.png} height="30" width="50" alt="flag"></img>
@@ -94,8 +118,8 @@ const CountryItem = ({ item }: Prop) => {
         </TableCell>
         <TableCell align="right">
           <FavoriteIcon
-            onClick={AddToFavoriteHandler}
-            sx={{ color: favoriteColor }}
+            onClick={addToFavoriteHandler}
+            sx={{ color: favoriteIconColor }}
           />
           <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
             <Alert severity="warning">
@@ -112,4 +136,5 @@ const CountryItem = ({ item }: Prop) => {
     </Fragment>
   );
 };
-export default CountryItem;
+
+export default SearchHandlerItem;

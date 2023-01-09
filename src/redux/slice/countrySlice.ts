@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import Country from "../../types/type";
 
-// InitialState Type
+//type
 type InitialState = {
   countryList: Country[];
   isLoading: boolean;
@@ -29,15 +29,10 @@ const countrySlice = createSlice({
     isPending: (state) => {
       state.isLoading = true;
     },
-    // case:rejected
-    isRejected: (state, action: PayloadAction<InitialState>) => {
-      state.isLoading = false;
-      state.countryList = [];
-      state.error = action.payload.error;
-    },
   },
 });
-
+// actions
 export const countryListActions = countrySlice.actions;
+// reducer
 const countryReducer = countrySlice.reducer;
 export default countryReducer;

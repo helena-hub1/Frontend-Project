@@ -1,29 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import Country from "../../types/type";
-
-// InitialState Type
+//type
 type InitialState = {
   homeIconColor: string;
   favoriteIconColor: string;
+  worldIconColor: string;
 };
 // InitialState
 const initialState: InitialState = {
   homeIconColor: "white",
   favoriteIconColor: "white",
+  worldIconColor: "white",
 };
 // Slice
 const iconColorSlice = createSlice({
   name: "iconColor",
   initialState,
   reducers: {
-    // case: HomeIcon
+    // case: homeIcon
     setHomeIconColor: (state) => {
       state.homeIconColor = "purple";
     },
-    // case: FavIcon
+    // case: favIcon
     setFavoriteIconColor: (state) => {
       state.favoriteIconColor = "red";
+    },
+    // case:worldIcon
+    setWorldIconColor: (state) => {
+      state.worldIconColor = "purple";
     },
   },
 });

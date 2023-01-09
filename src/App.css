@@ -1,9 +1,8 @@
+/* App */
 .App {
   text-align: center;
-  background-color: rgb(180, 115, 115);
-  color: #000;
-  letter-spacing: 10px;
+  background: rgb(180, 115, 115);
+  color: black;
   width: 80%;
-  height: 100%;
   margin: auto;
 }

@@ -1,10 +1,5 @@
-import React, { useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, Appdispatch } from "../../redux/store";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -12,32 +7,21 @@ import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
-import MapIcon from "@mui/icons-material/Map";
 import { red } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import PlaceIcon from "@mui/icons-material/Place";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import { ListItem } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import Link from "@mui/material/Link";
 
-import getCountryData from "../../thunk/country";
-import Country from "../../types/type";
+import Country from "../../../types/type";
 
-// Home Icon
-const HomeIcon = (props: SvgIconProps) => {
-  return (
-    <SvgIcon {...props}>
-      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-    </SvgIcon>
-  );
-};
-
-// MUI expandmore function
+// MUI expandmore handler
 type ExpandMoreProps = IconButtonProps & {
   expand: boolean;
 };
@@ -52,26 +36,19 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
     duration: theme.transitions.duration.shortest,
   }),
 }));
-function CountryDetail() {
-  // MUI state
+const CountryDetail = () => {
+  // state
+  const [countryDetail, setCountryDetail] = useState<Country[]>([]);
   const [expanded, setExpanded] = useState(false);
-  //   MUI handleclick function
 
+  // Expand click handler
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  const [countryDetail, setCountryDetail] = useState<Country[]>([]);
-  //Way 1 might be easier
-  const name = useParams(); // it gives an object what we wrote in the route and a value for it
-  console.log(name, "my name");
-  // OR distructuring we are taking the id from app,js
-  //Second way prefer Andrea
-  // const { random } = useParams();
+  // useParams
+  const name = useParams();
   const url = `https://restcountries.com/v3.1/name/${name.name}`;
-  console.log(url, "my url");
-  //useState and useEffect
-  const dispatch = useDispatch<Appdispatch>();
-
+  //  get data
   const getData = async () => {
     const response = await fetch(url);
     const data = await response.json();
@@ -81,12 +58,12 @@ function CountryDetail() {
   useEffect(() => {
     getData();
   }, [url]);
-  console.log(countryDetail, "countrylist from Detail");
+  // render
   return (
-    <div>
-      {countryDetail.map((item) => {
+    <div className="country_detail">
+      {countryDetail.map((item, index) => {
         return (
-          <Card sx={{ maxWidth: 345, width: "80%", ml: 40, mt: 3 }}>
+          <Card key={index} sx={{ maxWidth: 345, width: "80%", ml: 40, mt: 5 }}>
             <CardHeader
               avatar={
                 <Avatar sx={{ bgcolor: red[500] }} aria-label="country">
@@ -124,7 +101,7 @@ function CountryDetail() {
                 >
                   {item.region}
                 </Box>
-                region and{" "}
+                region and
                 <Box
                   component="span"
                   sx={{
@@ -154,18 +131,51 @@ function CountryDetail() {
                   }}
                 >
                   {item.latlng[1]}
-                </Box>{" "}
+                </Box>
                 <Box component="span">&deg;W</Box>, this country has population
-                of{" "}
-                <Box component="span" sx={{ color: "blue", ml: 1 }}>
+                of
+                <Box component="span" sx={{ color: "blue", ml: 1, mr: 1 }}>
                   {item.population}
                 </Box>
                 and it has the independent, according to CIA World Factbook.
               </Typography>
+              <Typography
+                component="div"
+                variant="body2"
+                color="text.secondary"
+              >
+                <Box sx={{ textAlign: "center" }}>Languages:</Box>
+                {item.languages
+                  ? Object.values(item.languages).map((item, index) => {
+                      return (
+                        <ListItem
+                          key={index}
+                          sx={{
+                            padding: 0,
+                            listStyleType: "disc",
+                            display: "list-item",
+                            textAlign: "justify",
+                          }}
+                        >
+                          {item}
+                        </ListItem>
+                      );
+                    })
+                  : null}
+              </Typography>
             </CardContent>
             <CardActions disableSpacing>
-              <IconButton aria-label="share">
-                <PlaceIcon />
+              <IconButton>
+                <KeyboardArrowLeftIcon />
+              </IconButton>
+              <IconButton aria-label="map">
+                <Link
+                  href={item.maps.googleMaps}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <PlaceIcon />
+                </Link>
               </IconButton>
               <ExpandMore
                 expand={expanded}
@@ -214,6 +224,6 @@ function CountryDetail() {
       })}
     </div>
   );
-}
+};
 
 export default CountryDetail;

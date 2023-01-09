@@ -1,30 +1,34 @@
-import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-import "./App.css";
+import CountryDetail from "./components/country/countrydetail/CountryDetail";
 import CountryList from "./components/country/countrylist/CountryList";
 import NavBar from "./components/navbar/NavBar";
-import FooterBar from "./components/footbar/FootBar";
+import FootBar from "./components/footbar/FootBar";
 import Favorite from "./pages/Favorite";
 import Home from "./pages/Home";
-import SearchForm from "./components/search/searchform/SearchForm";
-import { RootState } from "./redux/store";
-import Country from "./types/type";
-import SearchHandler from "./components/search/searchhandler/SearchHandler";
-import CountryDetail from "./components/country/CountryDetail";
+import "./App.css";
 
 function App() {
+  // theme
+  const theme = createTheme({
+    typography: {
+      fontFamily: ["Nunito", "sans-serif"].join(","),
+    },
+  });
   // render
   return (
     <div className="App">
-      <NavBar />
-
-      <Routes>
-        <Route path="" element={<Home />}></Route>
-        <Route path="/favorite" element={<Favorite />}></Route>
-        <Route path="name/:name" element={<CountryDetail />}></Route>
-      </Routes>
-      <FooterBar />
+      <ThemeProvider theme={theme}>
+        <NavBar />
+        <Routes>
+          <Route path="" element={<Home />}></Route>
+          <Route path="/favorite" element={<Favorite />}></Route>
+          <Route path="/countrylist" element={<CountryList />}></Route>
+          <Route path="name/:name" element={<CountryDetail />}></Route>
+        </Routes>
+        <FootBar />
+      </ThemeProvider>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-// Type
+// type
 type Country = {
   name: {
     common: string;
@@ -12,7 +12,7 @@ type Country = {
   };
   capital: string;
   languages: { [key: string]: string };
-  latlng: string[];
+  latlng: string;
   maps: {
     googleMaps: string;
     openStreetMaps: string;
@@ -24,4 +24,5 @@ type Country = {
   continents: string;
   timezones: string;
 };
+
 export default Country;

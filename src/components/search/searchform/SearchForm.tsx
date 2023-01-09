@@ -1,25 +1,30 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import { Box, TextField } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../redux/store";
 
+import { RootState } from "../../../redux/store";
 import { userInputActions } from "../../../redux/slice/userInputSlice";
 
 const SearchForm = () => {
+  // state
   const userInput = useSelector((state: RootState) => state.input.userInput);
+  const countryList = useSelector(
+    (state: RootState) => state.country.countryList
+  );
+  const [isFound, setIsFound] = useState<Boolean>(false);
+  // dispatch
   const dispatch = useDispatch();
-  //   get user input
-  const getUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //  userInput handler
+  const getUserInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(userInputActions.getUserInput(e.target.value));
+    setIsFound(true);
   };
-
-  console.log(userInput, "input from form");
-  //   onSearch handler
+  //render
   return (
-    <Box sx={{ mt: 5, ml: 10, width: "80%" }}>
+    <Box className="search_form" sx={{ mt: 20, ml: 15, width: "80%" }}>
       <TextField
         variant="standard"
-        onChange={getUserInput}
+        onChange={getUserInputHandler}
         label="Search"
         value={userInput}
       ></TextField>

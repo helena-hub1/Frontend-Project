@@ -3,7 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import userInputReducer from "./slice/userInputSlice";
 import countryReducer from "./slice/countrySlice";
 import favoriteReducer from "./slice/favoriteSlice";
-import iconColorReducer from "./slice/IconColorSlice";
+import iconColorReducer from "./slice/iconColorSlice";
 
 const store = configureStore({
   reducer: {

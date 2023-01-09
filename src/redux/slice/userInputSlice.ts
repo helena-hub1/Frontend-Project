@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// InitialState Type
+// type
 type InitialState = {
   userInput: string;
 };
