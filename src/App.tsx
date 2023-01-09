@@ -7,6 +7,7 @@ import NavBar from "./components/navbar/NavBar";
 import FootBar from "./components/footbar/FootBar";
 import Favorite from "./pages/Favorite";
 import Home from "./pages/Home";
+
 import "./App.css";
 
 function App() {

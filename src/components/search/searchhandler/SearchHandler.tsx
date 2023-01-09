@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,6 +10,7 @@ import Loading from "../../loading/Loading";
 import getCountryData from "../../../thunk/country";
 import Country from "../../../types/type";
 import SearchHandlerItem from "./SearchHandlerItem";
+import { userInputActions } from "../../../redux/slice/userInputSlice";
 
 const SearchHandler = () => {
   // state

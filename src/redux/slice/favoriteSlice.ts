@@ -15,13 +15,22 @@ const favoriteSlice = createSlice({
   name: "favorite",
   initialState,
   reducers: {
-    // Case:Add favorite
-    addFavorite: (state, action: PayloadAction<Country>) => {
-      state.favoriteList.push(action.payload);
+    // Case:Add favcountry
+    addFavoriteCountry: (state, action: PayloadAction<Country>) => {
+      if (
+        state.favoriteList.find(
+          (country) => country.name.common === action.payload.name.common
+        )
+      ) {
+        return;
+      } else {
+        state.favoriteList.push(action.payload);
+      }
     },
   },
 });
 //  action
 export const favoriteActions = favoriteSlice.actions;
 // reducer
-export default favoriteSlice.reducer;
+const favoriteReducer = favoriteSlice.reducer;
+export default favoriteReducer;

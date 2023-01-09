@@ -6,13 +6,14 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import { ListItem } from "@mui/material";
+import { IconButton, ListItem } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { styled } from "@mui/material/styles";
 
 import Country from "../../../types/type";
 import { RootState } from "../../../redux/store";
 import { favoriteActions } from "../../../redux/slice/favoriteSlice";
+import { iconColorActions } from "../../../redux/slice/iconColorSlice";
 
 // type
 type Prop = {
@@ -36,7 +37,13 @@ const CountryItem = ({ item }: Prop) => {
   const favoriteList = useSelector(
     (state: RootState) => state.favorite.favoriteList
   );
-  const [favoriteColor, setFavoriteColor] = useState("white");
+  const favoriteIconColor = useSelector(
+    (state: RootState) => state.iconColor.favoriteIconColor
+  );
+  let isFavorite = favoriteList.some(
+    (favitem) => favitem.name.common === item.name.common
+  );
+
   // dispatch
   const dispatch = useDispatch();
   // MUI snackbar state
@@ -54,14 +61,16 @@ const CountryItem = ({ item }: Prop) => {
     setOpen(false);
   };
   // Add favorite
-  const AddToFavoriteHandler = () => {
+  const AddToFavCountryHandler = () => {
     const index = favoriteList.findIndex(
       (favItem) => favItem.name.common === item.name.common
     );
-    if (index === -1) {
+    if (index !== -1) {
+      alert("The country is already in the fav List");
+    } else {
       handleClick();
-      dispatch(favoriteActions.addFavorite(item));
-      setFavoriteColor("red");
+      dispatch(favoriteActions.addFavoriteCountry(item));
+      dispatch(iconColorActions.setFavoriteIconColor());
     }
   };
   // render
@@ -93,10 +102,12 @@ const CountryItem = ({ item }: Prop) => {
             : null}
         </TableCell>
         <TableCell align="right">
-          <FavoriteIcon
-            onClick={AddToFavoriteHandler}
-            sx={{ color: favoriteColor }}
-          />
+          <IconButton
+            sx={{ color: isFavorite ? favoriteIconColor : "white" }}
+            onClick={AddToFavCountryHandler}
+          >
+            <FavoriteIcon />
+          </IconButton>
           <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
             <Alert severity="warning">
               A country just added to the favorite page!

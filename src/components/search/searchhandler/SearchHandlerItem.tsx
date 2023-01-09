@@ -58,14 +58,14 @@ const SearchHandlerItem = ({ item }: Prop) => {
   //   dispatch
   const dispatch = useDispatch();
 
-  //   Add favorite
+  //   Add Favcountry
   const addToFavoriteHandler = () => {
     const index = favoriteList.findIndex(
       (favItem) => favItem.name.common === item.name.common
     );
     if (index === -1) {
       handleClick();
-      dispatch(favoriteActions.addFavorite(item));
+      dispatch(favoriteActions.addFavoriteCountry(item));
       dispatch(iconColorActions.setFavoriteIconColor());
     }
   };
