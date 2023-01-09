@@ -108,7 +108,7 @@ const CountryItem = ({ item }: Prop) => {
           >
             <FavoriteIcon />
           </IconButton>
-          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
             <Alert severity="warning">
               A country just added to the favorite page!
             </Alert>

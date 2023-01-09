@@ -9,6 +9,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { ListItem } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import IconButton from "@mui/material/IconButton";
 
 import { RootState } from "../../../redux/store";
 import Country from "../../../types/type";
@@ -40,6 +41,14 @@ const SearchHandlerItem = ({ item }: Prop) => {
   const favoriteIconColor = useSelector(
     (state: RootState) => state.iconColor.favoriteIconColor
   );
+  let isFavorite = favoriteList.some(
+    (favitem) => favitem.name.common === item.name.common
+  );
+  const countryList = useSelector(
+    (state: RootState) => state.country.countryList
+  );
+
+  const userInput = useSelector((state: RootState) => state.input.userInput);
   // MUI snackbar state
   const [open, setOpen] = useState(false);
   // snakbar handler
@@ -58,18 +67,20 @@ const SearchHandlerItem = ({ item }: Prop) => {
   //   dispatch
   const dispatch = useDispatch();
 
-  //   Add Favcountry
+  //   Add to Fav
   const addToFavoriteHandler = () => {
     const index = favoriteList.findIndex(
       (favItem) => favItem.name.common === item.name.common
     );
-    if (index === -1) {
+    if (index !== -1) {
+      alert("The country is already in the fav List");
+    } else {
       handleClick();
       dispatch(favoriteActions.addFavoriteCountry(item));
       dispatch(iconColorActions.setFavoriteIconColor());
     }
   };
-  //   render
+  //render
   return (
     <Fragment>
       <TableRow sx={{ background: "rgb(180, 115, 115)", mt: 1 }}>
@@ -117,10 +128,12 @@ const SearchHandlerItem = ({ item }: Prop) => {
             : null}
         </TableCell>
         <TableCell align="right">
-          <FavoriteIcon
+          <IconButton
             onClick={addToFavoriteHandler}
-            sx={{ color: favoriteIconColor }}
-          />
+            sx={{ color: isFavorite ? favoriteIconColor : "white" }}
+          >
+            <FavoriteIcon />
+          </IconButton>
           <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
             <Alert severity="warning">
               A country just added to the favorite page!
