@@ -11,10 +11,9 @@ import { ListItem } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import IconButton from "@mui/material/IconButton";
 
-import { RootState } from "src/redux/store";
-import Country from "src/types/type";
-import { favoriteActions } from "src/redux/slice/favoriteSlice";
-import { iconColorActions } from "src/redux/slice/iconColorSlice";
+import { RootState } from "../../../redux/store";
+import Country from "../../../types/type";
+import { favoriteActions } from "../../../redux/slice/favoriteSlice";
 
 // type
 type Prop = {
@@ -37,9 +36,6 @@ const SearchHandlerItem = ({ item }: Prop) => {
   // state
   const favoriteList = useSelector(
     (state: RootState) => state.favorite.favoriteList
-  );
-  const favoriteIconColor = useSelector(
-    (state: RootState) => state.iconColor.favoriteIconColor
   );
   let isFavorite = favoriteList.some(
     (favitem) => favitem.name.common === item.name.common
@@ -73,7 +69,6 @@ const SearchHandlerItem = ({ item }: Prop) => {
     } else {
       handleClick();
       dispatch(favoriteActions.addFavoriteCountry(item));
-      dispatch(iconColorActions.setFavoriteIconColor());
     }
   };
   //render
@@ -126,7 +121,7 @@ const SearchHandlerItem = ({ item }: Prop) => {
         <TableCell align="right">
           <IconButton
             onClick={addToFavoriteHandler}
-            sx={{ color: isFavorite ? favoriteIconColor : "white" }}
+            sx={{ color: isFavorite ? "red" : "white" }}
           >
             <FavoriteIcon />
           </IconButton>

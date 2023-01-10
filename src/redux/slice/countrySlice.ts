@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import Country from "src/types/type";
+import Country from "../../types/type";
 
 //type
 type InitialState = {

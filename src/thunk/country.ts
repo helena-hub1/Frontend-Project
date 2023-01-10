@@ -1,6 +1,6 @@
-import { Appdispatch } from "src/redux/store";
-import { countryListActions } from "src/redux/slice/countrySlice";
-import url from "src/Utils/url";
+import { Appdispatch } from "../redux/store";
+import { countryListActions } from "../redux/slice/countrySlice";
+import url from "../Utils/url";
 
 // fetch data
 const getCountryData = () => {

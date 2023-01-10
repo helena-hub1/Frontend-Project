@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -19,7 +20,9 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import Link from "@mui/material/Link";
 
-import Country from "src/types/type";
+import Loading from "../../../components/loading/Loading";
+import Country from "../../../types/type";
+import { RootState } from "../../../redux/store";
 
 // MUI expandmore handler
 type ExpandMoreProps = IconButtonProps & {
@@ -40,24 +43,36 @@ const CountryDetail = () => {
   // state
   const [countryDetail, setCountryDetail] = useState<Country[]>([]);
   const [expanded, setExpanded] = useState(false);
+  const isLoading = useSelector((state: RootState) => state.country.isLoading);
 
   // Expand click handler
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
   // useParams
   const name = useParams();
   const url = `https://restcountries.com/v3.1/name/${name.name}`;
-  //  get data
-  const getData = async () => {
-    const response = await fetch(url);
-    const data = await response.json();
-    setCountryDetail(data);
-  };
+
   // manage the effect
   useEffect(() => {
+    //  fetch data
+    const getData = async () => {
+      const response = await fetch(url);
+      const data = await response.json();
+      setCountryDetail(data);
+    };
     getData();
   }, [url]);
+
+  //Loading
+  if (isLoading) {
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  }
   // render
   return (
     <div className="country_detail">

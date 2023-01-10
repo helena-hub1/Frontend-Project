@@ -3,7 +3,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 
-import { RootState } from "src/redux/store";
+import { RootState } from "../../../redux/store";
 
 //column definition
 const columns: GridColDef[] = [
@@ -11,7 +11,6 @@ const columns: GridColDef[] = [
     field: "attributeFlag",
     headerName: "Flag",
     width: 100,
-
     editable: false,
     valueGetter: (params) => {
       return params.getValue(params.id, "flags").png;
@@ -19,7 +18,7 @@ const columns: GridColDef[] = [
     renderCell: (params) => {
       return (
         <>
-          <img src={params.value} height="30" />
+          <img src={params.value} alt="flag" height="30" />
         </>
       );
     },
@@ -66,14 +65,14 @@ const FavoriteList = () => {
       <Typography variant="h5" sx={{ textAlign: "center", mt: 14 }}>
         Favorite Country List
       </Typography>
-      <Box sx={{ height: 500, width: "80%", mt: 5, minHeight: 100 }}>
+      <Box sx={{ height: 400, width: "80%", mt: 5, minHeight: 300 }}>
         <DataGrid
           rows={favoriteList}
           columns={columns}
           getRowId={(row) => row.name.common}
           pageSize={15}
           rowsPerPageOptions={[15]}
-          sx={{ ml: 23, width: "80%" }}
+          sx={{ ml: 13, width: "100%" }}
         />
       </Box>
     </div>

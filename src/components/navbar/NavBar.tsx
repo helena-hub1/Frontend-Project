@@ -7,14 +7,13 @@ import Typography from "@mui/material/Typography";
 import Badge from "@mui/material/Badge";
 import MenuIcon from "@mui/icons-material/Menu";
 import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Switch from "@mui/material/Switch";
 import LanguageIcon from "@mui/icons-material/Language";
 import { Link } from "react-router-dom";
 
-import { iconColorActions } from "src/redux/slice/iconColorSlice";
-import { RootState } from "src/redux/store";
+import { RootState } from "../../redux/store";
 
 //MUI home icon
 const HomeIcon = (props: SvgIconProps) => {
@@ -36,24 +35,16 @@ const NavBar = () => {
   const favoriteList = useSelector(
     (state: RootState) => state.favorite.favoriteList
   );
-  const homeIconColor = useSelector(
-    (state: RootState) => state.iconColor.homeIconColor
-  );
-  const favoriteIconColor = useSelector(
-    (state: RootState) => state.iconColor.favoriteIconColor
-  );
-  const worldIconColor = useSelector(
-    (state: RootState) => state.iconColor.worldIconColor
-  );
+  const [homeIconColor, setHomeIconColor] = useState<string>("white");
+  const [worldIconColor, setWorldIconColor] = useState<string>("white");
+  const [favIconColor, setFavIconColor] = useState<string>("white");
+
   // Badge state
   const [invisible, setInvisible] = useState(false);
   // Badge visibility handler
   const handleBadgeVisibility = () => {
     setInvisible(!invisible);
   };
-  //  dispatch
-  const dispatch = useDispatch();
-
   // render
   return (
     <Box className="nav_bar" sx={{ flexGrow: 1, m: 1 }}>
@@ -86,7 +77,7 @@ const NavBar = () => {
               <Link to="/">
                 <HomeIcon
                   sx={{ color: homeIconColor }}
-                  onClick={() => dispatch(iconColorActions.setHomeIconColor())}
+                  onClick={() => setHomeIconColor("purple")}
                 />
               </Link>
             </IconButton>
@@ -94,7 +85,7 @@ const NavBar = () => {
               <Link to="/countrylist">
                 <LanguageIcon
                   sx={{ color: worldIconColor }}
-                  onClick={() => dispatch(iconColorActions.setWorldIconColor())}
+                  onClick={() => setWorldIconColor("purple")}
                 />
               </Link>
             </IconButton>
@@ -106,10 +97,8 @@ const NavBar = () => {
               >
                 <Link to="/favorite">
                   <FavoriteIcon
-                    sx={{ color: favoriteIconColor }}
-                    onClick={() =>
-                      dispatch(iconColorActions.setFavoriteIconColor())
-                    }
+                    sx={{ color: favIconColor }}
+                    onClick={() => setFavIconColor("red")}
                   />
                 </Link>
               </Badge>

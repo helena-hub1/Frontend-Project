@@ -10,10 +10,9 @@ import { IconButton, ListItem } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { styled } from "@mui/material/styles";
 
-import Country from "src/types/type";
-import { RootState } from "src/redux/store";
-import { favoriteActions } from "src/redux/slice/favoriteSlice";
-import { iconColorActions } from "src/redux/slice/iconColorSlice";
+import Country from "../../../types/type";
+import { RootState } from "../../../redux/store";
+import { favoriteActions } from "../../../redux/slice/favoriteSlice";
 
 // type
 type Prop = {
@@ -31,19 +30,15 @@ const TableRowStyled = styled(TableRow)`
     color: black;
   }
 `;
-
 const CountryItem = ({ item }: Prop) => {
   // state
   const favoriteList = useSelector(
     (state: RootState) => state.favorite.favoriteList
   );
-  const favoriteIconColor = useSelector(
-    (state: RootState) => state.iconColor.favoriteIconColor
-  );
-  let isFavorite = favoriteList.some(
+
+  const isFavorite = favoriteList.some(
     (favitem) => favitem.name.common === item.name.common
   );
-
   // dispatch
   const dispatch = useDispatch();
   // MUI snackbar state
@@ -70,7 +65,6 @@ const CountryItem = ({ item }: Prop) => {
     } else {
       handleClick();
       dispatch(favoriteActions.addFavoriteCountry(item));
-      dispatch(iconColorActions.setFavoriteIconColor());
     }
   };
   // render
@@ -103,7 +97,7 @@ const CountryItem = ({ item }: Prop) => {
         </TableCell>
         <TableCell align="right">
           <IconButton
-            sx={{ color: isFavorite ? favoriteIconColor : "white" }}
+            sx={{ color: isFavorite ? "red" : "white" }}
             onClick={AddToFavCountryHandler}
           >
             <FavoriteIcon />

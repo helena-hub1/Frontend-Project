@@ -1,9 +1,9 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import { Box, TextField } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 
-import { RootState } from "src/redux/store";
-import { userInputActions } from "src/redux/slice/userInputSlice";
+import { RootState } from "../../../redux/store";
+import { userInputActions } from "../../../redux/slice/userInputSlice";
 
 const SearchForm = () => {
   // state
@@ -18,7 +18,7 @@ const SearchForm = () => {
   const userInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(userInputActions.getUserInput(e.target.value));
   };
-
+  // validation
   const userInputValidation = () => {
     // reset previous input
     dispatch(userInputActions.getUserInput(""));
@@ -31,7 +31,6 @@ const SearchForm = () => {
     }
     dispatch(userInputActions.getUserInput(""));
   };
-
   //render
   return (
     <Box className="search_form" sx={{ mt: 20, ml: 15, width: "80%" }}>

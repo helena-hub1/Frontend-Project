@@ -1,12 +1,12 @@
 import { Routes, Route } from "react-router";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-import CountryDetail from "src/components/country/countrydetail/CountryDetail";
-import CountryList from "src/components/country/countrylist/CountryList";
-import NavBar from "src/components/navbar/NavBar";
-import FootBar from "src/components/footbar/FootBar";
-import Favorite from "src/pages/Favorite";
-import Home from "src/pages/Home";
+import CountryDetail from "./components/country/countrydetail/CountryDetail";
+import CountryList from "./components/country/countrylist/CountryList";
+import NavBar from "./components/navbar/NavBar";
+import FootBar from "./components/footbar/FootBar";
+import Favorite from "./pages/Favorite";
+import Home from "./pages/Home";
 
 import "./App.css";
 
