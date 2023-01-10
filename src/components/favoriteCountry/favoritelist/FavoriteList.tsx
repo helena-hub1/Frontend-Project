@@ -3,7 +3,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 
-import { RootState } from "../../../redux/store";
+import { RootState } from "src/redux/store";
 
 //column definition
 const columns: GridColDef[] = [

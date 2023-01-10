@@ -5,10 +5,10 @@ import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
 
-import { RootState, Appdispatch } from "../../../redux/store";
-import Loading from "../../loading/Loading";
-import getCountryData from "../../../thunk/country";
-import Country from "../../../types/type";
+import { RootState, Appdispatch } from "src/redux/store";
+import Loading from "src/components/loading/Loading";
+import getCountryData from "src/thunk/country";
+import Country from "src/types/type";
 import SearchHandlerItem from "./SearchHandlerItem";
 
 const SearchHandler = () => {

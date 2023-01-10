@@ -2,8 +2,8 @@ import React, { useState, useCallback } from "react";
 import { Box, TextField } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 
-import { RootState } from "../../../redux/store";
-import { userInputActions } from "../../../redux/slice/userInputSlice";
+import { RootState } from "src/redux/store";
+import { userInputActions } from "src/redux/slice/userInputSlice";
 
 const SearchForm = () => {
   // state

@@ -19,7 +19,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import Link from "@mui/material/Link";
 
-import Country from "../../../types/type";
+import Country from "src/types/type";
 
 // MUI expandmore handler
 type ExpandMoreProps = IconButtonProps & {

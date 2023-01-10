@@ -10,10 +10,10 @@ import { IconButton, ListItem } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { styled } from "@mui/material/styles";
 
-import Country from "../../../types/type";
-import { RootState } from "../../../redux/store";
-import { favoriteActions } from "../../../redux/slice/favoriteSlice";
-import { iconColorActions } from "../../../redux/slice/iconColorSlice";
+import Country from "src/types/type";
+import { RootState } from "src/redux/store";
+import { favoriteActions } from "src/redux/slice/favoriteSlice";
+import { iconColorActions } from "src/redux/slice/iconColorSlice";
 
 // type
 type Prop = {
@@ -66,7 +66,7 @@ const CountryItem = ({ item }: Prop) => {
       (favItem) => favItem.name.common === item.name.common
     );
     if (index !== -1) {
-      alert("The country is already in the fav List");
+      alert("The country exists in the fav List.");
     } else {
       handleClick();
       dispatch(favoriteActions.addFavoriteCountry(item));

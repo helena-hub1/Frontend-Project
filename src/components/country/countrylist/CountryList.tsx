@@ -10,11 +10,11 @@ import Paper from "@mui/material/Paper";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import { useDispatch, useSelector } from "react-redux";
 
-import getCountryData from "../../../thunk/country";
-import { RootState, Appdispatch } from "../../../redux/store";
-import CountryItem from "../countryitem/CountryItem";
-import Loading from "../../loading/Loading";
-import Country from "../../../types/type";
+import getCountryData from "src/thunk/country";
+import { RootState, Appdispatch } from "src/redux/store";
+import CountryItem from "src/components/country/countryitem/CountryItem";
+import Loading from "src/components/loading/Loading";
+import Country from "src/types/type";
 // type
 type OrderBy = "asc" | "desc";
 

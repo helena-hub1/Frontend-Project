@@ -13,8 +13,8 @@ import Switch from "@mui/material/Switch";
 import LanguageIcon from "@mui/icons-material/Language";
 import { Link } from "react-router-dom";
 
-import { iconColorActions } from "../../redux/slice/iconColorSlice";
-import { RootState } from "../../redux/store";
+import { iconColorActions } from "src/redux/slice/iconColorSlice";
+import { RootState } from "src/redux/store";
 
 //MUI home icon
 const HomeIcon = (props: SvgIconProps) => {

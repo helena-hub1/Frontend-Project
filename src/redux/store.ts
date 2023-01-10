@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import userInputReducer from "./slice/userInputSlice";
-import countryReducer from "./slice/countrySlice";
-import favoriteReducer from "./slice/favoriteSlice";
-import iconColorReducer from "./slice/iconColorSlice";
+import userInputReducer from "src/redux/slice/userInputSlice";
+import countryReducer from "src/redux/slice/countrySlice";
+import favoriteReducer from "src/redux/slice/favoriteSlice";
+import iconColorReducer from "src/redux/slice/iconColorSlice";
 
 const store = configureStore({
   reducer: {
