@@ -23,7 +23,7 @@ const HomeIcon = (props: SvgIconProps) => {
     </SvgIcon>
   );
 };
-
+// color custom
 const styles = {
   customColor: {
     backgroundColor: "darksalmon",
@@ -35,10 +35,6 @@ const NavBar = () => {
   const favoriteList = useSelector(
     (state: RootState) => state.favorite.favoriteList
   );
-  const [homeIconColor, setHomeIconColor] = useState<string>("white");
-  const [worldIconColor, setWorldIconColor] = useState<string>("white");
-  const [favIconColor, setFavIconColor] = useState<string>("white");
-
   // Badge state
   const [invisible, setInvisible] = useState(false);
   // Badge visibility handler
@@ -75,31 +71,22 @@ const NavBar = () => {
               color="inherit"
             >
               <Link to="/">
-                <HomeIcon
-                  sx={{ color: homeIconColor }}
-                  onClick={() => setHomeIconColor("purple")}
-                />
+                <HomeIcon sx={{ color: "white" }} />
               </Link>
             </IconButton>
             <IconButton>
-              <Link to="/countrylist">
-                <LanguageIcon
-                  sx={{ color: worldIconColor }}
-                  onClick={() => setWorldIconColor("purple")}
-                />
+              <Link to="/countries">
+                <LanguageIcon sx={{ color: "white" }} />
               </Link>
             </IconButton>
-            <Box sx={{ mt: 1, ml: 1 }}>
+            <Box sx={{ mt: 1.4, ml: 1 }}>
               <Badge
-                color="secondary"
+                color="warning"
                 invisible={invisible}
                 badgeContent={favoriteList.length}
               >
                 <Link to="/favorite">
-                  <FavoriteIcon
-                    sx={{ color: favIconColor }}
-                    onClick={() => setFavIconColor("red")}
-                  />
+                  <FavoriteIcon sx={{ color: "white" }} />
                 </Link>
               </Badge>
               <Switch

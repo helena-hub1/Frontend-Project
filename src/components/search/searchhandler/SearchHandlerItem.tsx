@@ -61,15 +61,8 @@ const SearchHandlerItem = ({ item }: Prop) => {
 
   //   Add to Fav
   const addToFavoriteHandler = () => {
-    const index = favoriteList.findIndex(
-      (favItem) => favItem.name.common === item.name.common
-    );
-    if (index !== -1) {
-      alert("The country is already in the fav List.");
-    } else {
-      handleClick();
-      dispatch(favoriteActions.addFavoriteCountry(item));
-    }
+    dispatch(favoriteActions.addFavoriteCountry(item));
+    handleClick();
   };
   //render
   return (

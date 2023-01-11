@@ -26,12 +26,12 @@ const FootBar = () => {
             component="div"
             sx={{
               alignContent: "center",
-              ml: 10,
+              ml: 12,
               width: "80%",
               fontStyle: "italic",
             }}
           >
-            Copyright &copy; 2023, Helen @ Integrify, Front End Final Project
+            Copyright &copy; 2023, Helen @ Integrify, Front End Final Project.
           </Typography>
         </Toolbar>
       </AppBar>

@@ -65,7 +65,7 @@ const FavoriteList = () => {
       <Typography variant="h5" sx={{ textAlign: "center", mt: 14 }}>
         Favorite Country List
       </Typography>
-      <Box sx={{ height: 400, width: "80%", mt: 5, minHeight: 300 }}>
+      <Box sx={{ height: 400, width: "80%", mt: 5 }}>
         <DataGrid
           rows={favoriteList}
           columns={columns}

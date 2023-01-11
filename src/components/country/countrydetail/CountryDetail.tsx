@@ -81,7 +81,7 @@ const CountryDetail = () => {
           <Card key={index} sx={{ maxWidth: 345, width: "80%", ml: 40, mt: 5 }}>
             <CardHeader
               avatar={
-                <Avatar sx={{ bgcolor: red[500] }} aria-label="country">
+                <Avatar sx={{ bgcolor: red[400] }} aria-label="country">
                   {item.name.common.charAt(0)}
                 </Avatar>
               }
@@ -184,12 +184,8 @@ const CountryDetail = () => {
                 <KeyboardArrowLeftIcon />
               </IconButton>
               <IconButton aria-label="map">
-                <Link
-                  href={item.maps.googleMaps}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <PlaceIcon />
+                <Link href={item.maps.googleMaps} target="_blank">
+                  <PlaceIcon sx={{ color: "darksalmon" }} />
                 </Link>
               </IconButton>
               <ExpandMore

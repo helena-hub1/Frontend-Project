@@ -6,13 +6,11 @@ import Country from "../../types/type";
 type InitialState = {
   countryList: Country[];
   isLoading: boolean;
-  error: string | null;
 };
 // InitialState
 const initialState: InitialState = {
   countryList: [],
   isLoading: false,
-  error: null,
 };
 // Slice
 const countrySlice = createSlice({
@@ -23,7 +21,6 @@ const countrySlice = createSlice({
     getCountryData: (state, action: PayloadAction<Country[]>) => {
       state.countryList = action.payload;
       state.isLoading = false;
-      state.error = null;
     },
     //case: pending
     isPending: (state) => {

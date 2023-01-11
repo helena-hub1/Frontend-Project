@@ -39,10 +39,10 @@ const CountryList = () => {
 
   // sort logic
   const sortData = (countryData: Country[], orderBy: OrderBy) => {
-    // switch
+    // switch statment
     switch (orderBy) {
-      case "asc":
       default:
+      case "asc":
         return countryData.sort((a, b) =>
           a.name.common > b.name.common
             ? 1
@@ -89,9 +89,7 @@ const CountryList = () => {
             <TableRow>
               <TableCell sx={{ fontWeight: "bold" }}>Flag</TableCell>
               <TableCell
-                onClick={() => {
-                  onSortClickHandler();
-                }}
+                onClick={onSortClickHandler}
                 align="center"
                 sx={{ fontWeight: "bold" }}
               >

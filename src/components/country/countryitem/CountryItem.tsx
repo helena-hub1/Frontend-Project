@@ -57,22 +57,15 @@ const CountryItem = ({ item }: Prop) => {
   };
   // Add favorite
   const AddToFavCountryHandler = () => {
-    const index = favoriteList.findIndex(
-      (favItem) => favItem.name.common === item.name.common
-    );
-    if (index !== -1) {
-      alert("The country exists in the fav List.");
-    } else {
-      handleClick();
-      dispatch(favoriteActions.addFavoriteCountry(item));
-    }
+    dispatch(favoriteActions.addFavoriteCountry(item));
+    handleClick();
   };
   // render
   return (
     <Fragment>
       <TableRowStyled>
         <TableCell align="center">
-          <img src={item.flags.png} height="30" width="50" alt="flag"></img>
+          <img src={item.flags.png} height="50px" width="70px" alt="flag"></img>
         </TableCell>
         <TableCell align="center">{item.name.common}</TableCell>
         <TableCell align="center">{item.region}</TableCell>
