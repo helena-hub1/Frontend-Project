@@ -1,8 +1,8 @@
 import { Appdispatch } from "../redux/store";
 import { countryListActions } from "../redux/slice/countrySlice";
+
 import url from "../Utils/url";
 
-// fetch data
 const getCountryData = () => {
   return async (dispatch: Appdispatch) => {
     dispatch(countryListActions.isPending());
@@ -11,4 +11,5 @@ const getCountryData = () => {
     dispatch(countryListActions.getCountryData(countryData));
   };
 };
+
 export default getCountryData;

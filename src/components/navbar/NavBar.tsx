@@ -15,7 +15,6 @@ import { Link } from "react-router-dom";
 
 import { RootState } from "../../redux/store";
 
-//MUI home icon
 const HomeIcon = (props: SvgIconProps) => {
   return (
     <SvgIcon {...props}>
@@ -23,21 +22,16 @@ const HomeIcon = (props: SvgIconProps) => {
     </SvgIcon>
   );
 };
-// color custom
 const styles = {
   customColor: {
     backgroundColor: "darksalmon",
   },
 };
-
 const NavBar = () => {
-  // state
   const favoriteList = useSelector(
     (state: RootState) => state.favorite.favoriteList
   );
-  // Badge state
   const [invisible, setInvisible] = useState(false);
-  // Badge visibility handler
   const handleBadgeVisibility = () => {
     setInvisible(!invisible);
   };
@@ -69,26 +63,24 @@ const NavBar = () => {
               size="large"
               aria-label="show Home page"
               color="inherit"
+              component={Link}
+              to="/"
             >
-              <Link to="/">
-                <HomeIcon sx={{ color: "white" }} />
-              </Link>
+              <HomeIcon sx={{ color: "white" }} />
             </IconButton>
-            <IconButton>
-              <Link to="/countries">
-                <LanguageIcon sx={{ color: "white" }} />
-              </Link>
+            <IconButton component={Link} to="/countries">
+              <LanguageIcon sx={{ color: "white" }} />
             </IconButton>
-            <Box sx={{ mt: 1.4, ml: 1 }}>
-              <Badge
-                color="warning"
-                invisible={invisible}
-                badgeContent={favoriteList.length}
-              >
-                <Link to="/favorite">
+            <Box sx={{ mt: 0.5, ml: 1 }}>
+              <IconButton component={Link} to="/favorite">
+                <Badge
+                  color="warning"
+                  invisible={invisible}
+                  badgeContent={favoriteList.length}
+                >
                   <FavoriteIcon sx={{ color: "white" }} />
-                </Link>
-              </Badge>
+                </Badge>
+              </IconButton>
               <Switch
                 checked={!invisible}
                 onChange={handleBadgeVisibility}

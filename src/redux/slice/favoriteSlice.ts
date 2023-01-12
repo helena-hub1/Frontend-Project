@@ -2,20 +2,16 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import Country from "../../types/type";
 
-// type
 type InitialState = {
   favoriteList: Country[];
 };
-
 const initialState: InitialState = {
   favoriteList: [],
 };
-// Slice
 const favoriteSlice = createSlice({
   name: "favorite",
   initialState,
   reducers: {
-    // Case:Add favcountry
     addFavoriteCountry: (state, action: PayloadAction<Country>) => {
       if (
         state.favoriteList.find(
@@ -27,10 +23,22 @@ const favoriteSlice = createSlice({
         state.favoriteList.push(action.payload);
       }
     },
+
+    removeFavriteCountry: (state, action: PayloadAction<Country>) => {
+      const index = state.favoriteList.findIndex(
+        (item) => item.name.common === action.payload.name.common
+      );
+      if (index === -1) {
+        return;
+      } else {
+        const filteredResolution = state.favoriteList.filter(
+          (item) => item.name.common !== action.payload.name.common
+        );
+        state.favoriteList = filteredResolution;
+      }
+    },
   },
 });
-//  action
 export const favoriteActions = favoriteSlice.actions;
-// reducer
 const favoriteReducer = favoriteSlice.reducer;
 export default favoriteReducer;

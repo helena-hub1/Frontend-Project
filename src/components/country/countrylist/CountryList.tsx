@@ -12,15 +12,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 import getCountryData from "../../../thunk/country";
 import { RootState, Appdispatch } from "../../../redux/store";
-import CountryItem from "../../../components/country/countryitem/CountryItem";
-import Loading from "../../../components/loading/Loading";
+import CountryItem from "../countryItem/CountryItem";
+import Loading from "../../loading/Loading";
 import Country from "../../../types/type";
 
-// type
 type OrderBy = "asc" | "desc";
 
 const CountryList = () => {
-  //  state
   const countryList = useSelector(
     (state: RootState) => state.country.countryList
   );
@@ -29,17 +27,13 @@ const CountryList = () => {
     useState<Country[]>(countryList);
   const [orderDirection, setOrderDirection] = useState<"asc" | "desc">("asc");
 
-  //dispatch
   const dispatch = useDispatch<Appdispatch>();
 
-  // get country data
   useEffect(() => {
     dispatch(getCountryData());
   }, [dispatch]);
 
-  // sort logic
   const sortData = (countryData: Country[], orderBy: OrderBy) => {
-    // switch statment
     switch (orderBy) {
       default:
       case "asc":
@@ -65,7 +59,6 @@ const CountryList = () => {
     setSortCountryData(sortData(dataForSort, orderDirection));
     setOrderDirection(orderDirection === "asc" ? "desc" : "asc");
   };
-  //Loading
   if (isLoading) {
     return (
       <div>
@@ -73,7 +66,6 @@ const CountryList = () => {
       </div>
     );
   }
-  // render
   return (
     <div className="country_list">
       <Typography variant="h5" sx={{ textAlign: "center", mt: 14 }}>

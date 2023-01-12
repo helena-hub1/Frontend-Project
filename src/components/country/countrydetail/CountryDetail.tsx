@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Params, useParams } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -20,9 +20,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import Link from "@mui/material/Link";
 
-import Loading from "../../../components/loading/Loading";
-import Country from "../../../types/type";
-import { RootState } from "../../../redux/store";
+import { RootState, Appdispatch } from "../../../redux/store";
+import getCountryDetail from "src/thunk/countryDetail";
 
 // MUI expandmore handler
 type ExpandMoreProps = IconButtonProps & {
@@ -39,41 +38,22 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
     duration: theme.transitions.duration.shortest,
   }),
 }));
-const CountryDetail = () => {
-  // state
-  const [countryDetail, setCountryDetail] = useState<Country[]>([]);
-  const [expanded, setExpanded] = useState(false);
-  const isLoading = useSelector((state: RootState) => state.country.isLoading);
 
-  // Expand click handler
+const CountryDetail = () => {
+  const countryDetail = useSelector(
+    (state: RootState) => state.countryDetail.countryDetail
+  );
+  const [expanded, setExpanded] = useState(false);
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
-  // useParams
-  const name = useParams();
-  const url = `https://restcountries.com/v3.1/name/${name.name}`;
-
-  // manage the effect
+  const dispatch = useDispatch<Appdispatch>();
+  const { name } = useParams<Params>();
   useEffect(() => {
-    //  fetch data
-    const getData = async () => {
-      const response = await fetch(url);
-      const data = await response.json();
-      setCountryDetail(data);
-    };
-    getData();
-  }, [url]);
+    dispatch(getCountryDetail(name));
+  }, [dispatch, name]);
 
-  //Loading
-  if (isLoading) {
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
-  }
-  // render
   return (
     <div className="country_detail">
       {countryDetail.map((item, index) => {
@@ -181,11 +161,13 @@ const CountryDetail = () => {
             </CardContent>
             <CardActions disableSpacing>
               <IconButton>
-                <KeyboardArrowLeftIcon />
+                <Link href="/">
+                  <KeyboardArrowLeftIcon />
+                </Link>
               </IconButton>
-              <IconButton aria-label="map">
+              <IconButton aria-label="map" sx={{ color: "orange" }}>
                 <Link href={item.maps.googleMaps} target="_blank">
-                  <PlaceIcon sx={{ color: "darksalmon" }} />
+                  <PlaceIcon />
                 </Link>
               </IconButton>
               <ExpandMore

@@ -28,22 +28,15 @@ const TableRowStyled = styled(TableRow)`
   &:nth-of-type(even) {
     background-color: rgb(180, 115, 115);
   }
-  & > td {
-    color: black;
-  }
 `;
 const SearchHandlerItem = ({ item }: Prop) => {
-  // state
   const favoriteList = useSelector(
     (state: RootState) => state.favorite.favoriteList
   );
   let isFavorite = favoriteList.some(
     (favitem) => favitem.name.common === item.name.common
   );
-
-  // MUI snackbar state
   const [open, setOpen] = useState(false);
-  // snakbar handler
   const handleClick = () => {
     setOpen(true);
   };
@@ -56,15 +49,15 @@ const SearchHandlerItem = ({ item }: Prop) => {
     }
     setOpen(false);
   };
-  //   dispatch
   const dispatch = useDispatch();
-
-  //   Add to Fav
   const addToFavoriteHandler = () => {
     dispatch(favoriteActions.addFavoriteCountry(item));
     handleClick();
   };
-  //render
+  const removeFromFavoriteHandler = () => {
+    dispatch(favoriteActions.removeFavriteCountry(item));
+    handleClick();
+  };
   return (
     <Fragment>
       <TableRow sx={{ background: "rgb(180, 115, 115)", mt: 1 }}>
@@ -113,19 +106,29 @@ const SearchHandlerItem = ({ item }: Prop) => {
         </TableCell>
         <TableCell align="right">
           <IconButton
-            onClick={addToFavoriteHandler}
+            onClick={
+              isFavorite ? removeFromFavoriteHandler : addToFavoriteHandler
+            }
             sx={{ color: isFavorite ? "red" : "white" }}
           >
             <FavoriteIcon />
           </IconButton>
-          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-            <Alert severity="warning">
-              A country just added to the favorite page!
-            </Alert>
-          </Snackbar>
+          {isFavorite ? (
+            <Snackbar open={open} autoHideDuration={1000} onClose={handleClose}>
+              <Alert severity="success">
+                {item.name.common} is added to the favorite page!
+              </Alert>
+            </Snackbar>
+          ) : (
+            <Snackbar open={open} autoHideDuration={1000} onClose={handleClose}>
+              <Alert severity="warning">
+                {item.name.common} is removed from favorite list!
+              </Alert>
+            </Snackbar>
+          )}
         </TableCell>
         <TableCell align="right">
-          <Link to={`/name/${item.name.common}`}>
+          <Link to={`countries/name/${item.name.common}`}>
             <KeyboardArrowRightIcon sx={{ color: "white" }} />
           </Link>
         </TableCell>

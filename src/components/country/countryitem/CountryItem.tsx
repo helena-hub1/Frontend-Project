@@ -14,34 +14,22 @@ import Country from "../../../types/type";
 import { RootState } from "../../../redux/store";
 import { favoriteActions } from "../../../redux/slice/favoriteSlice";
 
-// type
 type Prop = {
   item: Country;
 };
-// table row color
-const TableRowStyled = styled(TableRow)`
+const StyledTableRow = styled(TableRow)`
   &:nth-of-type(odd) {
     background-color: darksalmon;
   }
   &:nth-of-type(even) {
     background-color: rgb(180, 115, 115);
   }
-  & > td {
-    color: black;
-  }
 `;
 const CountryItem = ({ item }: Prop) => {
-  // state
   const favoriteList = useSelector(
     (state: RootState) => state.favorite.favoriteList
   );
-
-  const isFavorite = favoriteList.some(
-    (favitem) => favitem.name.common === item.name.common
-  );
-  // dispatch
   const dispatch = useDispatch();
-  // MUI snackbar state
   const [open, setOpen] = useState(false);
   const handleClick = () => {
     setOpen(true);
@@ -55,15 +43,21 @@ const CountryItem = ({ item }: Prop) => {
     }
     setOpen(false);
   };
-  // Add favorite
-  const AddToFavCountryHandler = () => {
+
+  const isFavorite = favoriteList.some(
+    (favitem) => favitem.name.common === item.name.common
+  );
+  const addToFavCountryHandler = () => {
     dispatch(favoriteActions.addFavoriteCountry(item));
     handleClick();
   };
-  // render
+  const removeFavCountryHandler = () => {
+    dispatch(favoriteActions.removeFavriteCountry(item));
+    handleClick();
+  };
   return (
     <Fragment>
-      <TableRowStyled>
+      <StyledTableRow>
         <TableCell align="center">
           <img src={item.flags.png} height="50px" width="70px" alt="flag"></img>
         </TableCell>
@@ -91,22 +85,32 @@ const CountryItem = ({ item }: Prop) => {
         <TableCell align="right">
           <IconButton
             sx={{ color: isFavorite ? "red" : "white" }}
-            onClick={AddToFavCountryHandler}
+            onClick={
+              isFavorite ? removeFavCountryHandler : addToFavCountryHandler
+            }
           >
             <FavoriteIcon />
           </IconButton>
-          <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-            <Alert severity="warning">
-              A country just added to the favorite page!
-            </Alert>
-          </Snackbar>
+          {isFavorite ? (
+            <Snackbar open={open} autoHideDuration={1000} onClose={handleClose}>
+              <Alert severity="success">
+                {item.name.common} is added to the favorite page!
+              </Alert>
+            </Snackbar>
+          ) : (
+            <Snackbar open={open} autoHideDuration={1000} onClose={handleClose}>
+              <Alert severity="warning">
+                {item.name.common} is removed from favorite list!
+              </Alert>
+            </Snackbar>
+          )}
         </TableCell>
         <TableCell align="right">
-          <Link to={`/name/${item.name.common}`}>
+          <Link to={`./name/${item.name.common}`}>
             <KeyboardArrowRightIcon sx={{ color: "white" }} />
           </Link>
         </TableCell>
-      </TableRowStyled>
+      </StyledTableRow>
     </Fragment>
   );
 };

@@ -6,24 +6,19 @@ import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
 
 import { RootState, Appdispatch } from "../../../redux/store";
-import Loading from "../../../components/loading/Loading";
 import getCountryData from "../../../thunk/country";
 import Country from "../../../types/type";
 import SearchHandlerItem from "./SearchHandlerItem";
 
 const SearchHandler = () => {
-  // state
   const [filteredCountry, setFilteredCountry] = useState<Country[]>([]);
   const userInput = useSelector((state: RootState) => state.input.userInput);
-  const isLoading = useSelector((state: RootState) => state.country.isLoading);
   const countryList = useSelector(
     (state: RootState) => state.country.countryList
   );
 
-  //dispatch
   const dispatch = useDispatch<Appdispatch>();
 
-  // manage effect
   useEffect(() => {
     dispatch(getCountryData());
   }, [dispatch]);
@@ -35,13 +30,8 @@ const SearchHandler = () => {
     );
     setFilteredCountry(filtered);
   }, [userInput, countryList]);
-  if (isLoading) {
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
-  }
+
+  // render
   return (
     <div className="search_handler">
       <TableContainer component={Paper} sx={{ mt: 10, ml: 12, width: "80%" }}>

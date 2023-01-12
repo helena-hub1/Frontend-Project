@@ -1,4 +1,3 @@
-// type
 type Country = {
   name: {
     common: string;

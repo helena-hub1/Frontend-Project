@@ -3,14 +3,12 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
-//custom color
 const styles = {
   customColor: {
     backgroundColor: "darksalmon",
   },
 };
 const FootBar = () => {
-  // render
   return (
     <Box className="foot_bar" sx={{ flexGrow: 1, m: 1 }}>
       <AppBar
