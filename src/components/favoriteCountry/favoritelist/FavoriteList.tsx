@@ -9,7 +9,7 @@ const columns: GridColDef[] = [
   {
     field: "attributeFlag",
     headerName: "Flag",
-    width: 150,
+    width: 100,
     valueGetter: (params) => {
       return params.getValue(params.id, "flags").png;
     },

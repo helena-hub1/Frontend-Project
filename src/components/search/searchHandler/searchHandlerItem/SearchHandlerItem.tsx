@@ -11,9 +11,9 @@ import { ListItem } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import IconButton from "@mui/material/IconButton";
 
-import { RootState } from "../../../redux/store";
-import Country from "../../../types/type";
-import { favoriteActions } from "../../../redux/slice/favoriteSlice";
+import { RootState } from "../../../../redux/store";
+import Country from "../../../../types/type";
+import { favoriteActions } from "../../../../redux/slice/favoriteSlice";
 
 // type
 type Prop = {

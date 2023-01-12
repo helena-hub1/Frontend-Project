@@ -17,17 +17,14 @@ import Typography from "@mui/material/Typography";
 import { ListItem } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import Link from "@mui/material/Link";
 
 import { RootState, Appdispatch } from "../../../redux/store";
 import getCountryDetail from "src/thunk/countryDetail";
 
-// MUI expandmore handler
 type ExpandMoreProps = IconButtonProps & {
   expand: boolean;
 };
-
 const ExpandMore = styled((props: ExpandMoreProps) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -58,7 +55,7 @@ const CountryDetail = () => {
     <div className="country_detail">
       {countryDetail.map((item, index) => {
         return (
-          <Card key={index} sx={{ maxWidth: 345, width: "80%", ml: 40, mt: 5 }}>
+          <Card key={index} sx={{ maxWidth: 345, width: "80%", ml: 43, mt: 5 }}>
             <CardHeader
               avatar={
                 <Avatar sx={{ bgcolor: red[400] }} aria-label="country">
@@ -160,11 +157,6 @@ const CountryDetail = () => {
               </Typography>
             </CardContent>
             <CardActions disableSpacing>
-              <IconButton>
-                <Link href="/">
-                  <KeyboardArrowLeftIcon />
-                </Link>
-              </IconButton>
               <IconButton aria-label="map" sx={{ color: "orange" }}>
                 <Link href={item.maps.googleMaps} target="_blank">
                   <PlaceIcon />
@@ -187,27 +179,19 @@ const CountryDetail = () => {
                   </Box>
                 </Typography>
                 <Typography variant="body2">
-                  <Box component="span" sx={{ fontWeight: "bold" }}>
-                    Car sign:
-                  </Box>
+                  <Box component="span">Car sign:</Box>
                   {item.car.signs}
                 </Typography>
                 <Typography variant="body2">
-                  <Box component="span" sx={{ fontWeight: "bold" }}>
-                    Car side:
-                  </Box>
+                  <Box component="span">Car side:</Box>
                   {item.car.side}
                 </Typography>
                 <Typography variant="body2">
-                  <Box component="span" sx={{ fontWeight: "bold" }}>
-                    Continents:
-                  </Box>
+                  <Box component="span">Continents:</Box>
                   {item.continents}
                 </Typography>
                 <Typography variant="body2">
-                  <Box component="span" sx={{ fontWeight: "bold" }}>
-                    Time zone:
-                  </Box>
+                  <Box component="span">Time zone:</Box>
                   {item.timezones}
                 </Typography>
               </CardContent>
