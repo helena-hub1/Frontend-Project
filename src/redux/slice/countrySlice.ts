@@ -10,7 +10,6 @@ const initialState: InitialState = {
   countryList: [],
   isLoading: false,
 };
-
 const countrySlice = createSlice({
   name: "country",
   initialState,
@@ -22,6 +21,7 @@ const countrySlice = createSlice({
     isPending: (state) => {
       state.isLoading = true;
     },
+    sortcountryData: (state, action: PayloadAction<Country[]>) => {},
   },
 });
 // actions

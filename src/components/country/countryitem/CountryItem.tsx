@@ -31,6 +31,7 @@ const CountryItem = ({ item }: Prop) => {
   );
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+
   const handleClick = () => {
     setOpen(true);
   };

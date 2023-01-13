@@ -47,7 +47,7 @@ const SearchForm = () => {
         value={userInput}
         onClick={userInputValidation}
       ></TextField>
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={1000} onClose={handleClose}>
         <Alert severity="warning">The name is not found in the system!</Alert>
       </Snackbar>
     </Box>
