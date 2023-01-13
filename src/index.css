@@ -1,10 +1,11 @@
 body {
   margin: 0;
-  font-family: "Nunito", sans-serif;
+  font-family: "Bona Nova", serif;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Nunito", sans-serif;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Bona Nova", serif;
 }

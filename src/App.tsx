@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import CountryDetail from "./components/country/countryDetail/CountryDetail";
-import Countries from "./components/country/countryList/CountryList";
+import Countries from "./pages/countries/Countries";
 import NavBar from "./components/navbar/NavBar";
 import FootBar from "./components/footbar/FootBar";
 import Favorite from "./pages/favorite/Favorite";

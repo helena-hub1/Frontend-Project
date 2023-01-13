@@ -20,7 +20,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Link from "@mui/material/Link";
 
 import { RootState, Appdispatch } from "../../../redux/store";
-import getCountryDetail from "src/thunk/countryDetail";
+import getCountryDetailData from "../../../thunk/countryDetail";
 
 type ExpandMoreProps = IconButtonProps & {
   expand: boolean;
@@ -48,7 +48,7 @@ const CountryDetail = () => {
   const dispatch = useDispatch<Appdispatch>();
   const { name } = useParams<Params>();
   useEffect(() => {
-    dispatch(getCountryDetail(name));
+    dispatch(getCountryDetailData(name));
   }, [dispatch, name]);
 
   return (
