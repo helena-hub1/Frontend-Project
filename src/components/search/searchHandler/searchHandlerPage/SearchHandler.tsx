@@ -8,7 +8,7 @@ import Paper from "@mui/material/Paper";
 import { RootState, Appdispatch } from "../../../../redux/store";
 import getCountryData from "../../../../thunk/country";
 import Country from "../../../../types/type";
-import SearchHandlerItem from "../searchHandlerItem/SearchHandlerItem";
+import SearchHandlerItem from "../searchhandleritem/SearchHandlerItem";
 
 const SearchHandler = () => {
   const [filteredCountry, setFilteredCountry] = useState<Country[]>([]);

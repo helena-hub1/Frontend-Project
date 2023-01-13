@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import getCountryData from "../../../thunk/country";
 import { RootState, Appdispatch } from "../../../redux/store";
-import CountryItem from "../countryItem/CountryItem";
+import CountryItem from "../countryitem/CountryItem";
 import Loading from "../../loading/Loading";
 import Country from "../../../types/type";
 
