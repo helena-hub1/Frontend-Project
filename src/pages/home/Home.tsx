@@ -1,5 +1,5 @@
-import SearchForm from "../../components/search/searchform/SearchForm";
-import SearchHandler from "../../components/search/searchHandler/searchhandlerpage/SearchHandler";
+import SearchForm from "../../components/search/searchForm/SearchForm";
+import SearchHandler from "../../components/search/searchHandler/searchHandlerPage/SearchHandler";
 
 const Home = () => {
   return (

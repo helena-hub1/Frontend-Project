@@ -1,4 +1,4 @@
-import CountryList from "../../components/country/countrylist/CountryList";
+import CountryList from "../../components/country/countryList/CountryList";
 
 const Countries = () => {
   return <CountryList />;
