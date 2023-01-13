@@ -16,7 +16,7 @@ const columns: GridColDef[] = [
     renderCell: (params) => {
       return (
         <>
-          <img src={params.value} alt="flag" height="30" />
+          <img src={params.value} alt="flag" height="30" width="50" />
         </>
       );
     },
