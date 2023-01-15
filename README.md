@@ -57,4 +57,4 @@ ONLY DO THIS PART WHEN YOU HAVE COMPLETED THE REQUIREMENTS PART
 
 ![Country detail](https://raw.githubusercontent.com/Andreaa-Dev/Country-list/master/src/images/eachCountry.png)
 
-Deployment link: https://isa-6-front-end-project-i8r6.vercel.app/
+Deployment link: https://main--bright-alpaca-db35b1.netlify.app/

@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import App from "./App";
 import "./index.css";
@@ -11,13 +12,22 @@ import store from "./redux/store";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+// Theme
+const theme = createTheme({
+  typography: {
+    fontFamily: ["Nunito", "sans-serif"].join(","),
+    fontSize: 16,
+  },
+});
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>
 );
 

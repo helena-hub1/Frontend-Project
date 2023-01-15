@@ -1,6 +1,5 @@
 import { Appdispatch } from "../redux/store";
 import { countryListActions } from "../redux/slice/countrySlice";
-
 import url from "../Utils/url";
 
 const getCountryData = () => {

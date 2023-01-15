@@ -43,7 +43,7 @@ const columns: GridColDef[] = [
   {
     field: "attributeLanguage",
     headerName: "Languages",
-    width: 150,
+    width: 250,
 
     valueGetter: (params) => {
       return Object.values(params.getValue(params.id, "languages"));
@@ -52,22 +52,24 @@ const columns: GridColDef[] = [
 ];
 
 const FavoriteList = () => {
+  // state
   const favoriteList = useSelector(
     (state: RootState) => state.favorite.favoriteList
   );
+  // render
   return (
     <div className="favorite_list">
       <Typography variant="h5" sx={{ textAlign: "center", mt: 14 }}>
         Favorite Country List
       </Typography>
-      <Box sx={{ height: 400, width: "100%", mt: 5 }}>
+      <Box sx={{ height: 500, width: "80%", mt: 5, ml: 13 }}>
         <DataGrid
           rows={favoriteList}
           columns={columns}
           getRowId={(row) => row.name.common}
           pageSize={15}
           rowsPerPageOptions={[15]}
-          sx={{ ml: 20, width: 700 }}
+          sx={{ width: 800, height: 500 }}
         />
       </Box>
     </div>

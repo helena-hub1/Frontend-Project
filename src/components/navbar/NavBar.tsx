@@ -28,6 +28,7 @@ const styles = {
   },
 };
 const NavBar = () => {
+  // state
   const favoriteList = useSelector(
     (state: RootState) => state.favorite.favoriteList
   );

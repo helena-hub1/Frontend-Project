@@ -4,7 +4,7 @@ import userInputReducer from "../redux/slice/userInputSlice";
 import countryReducer from "../redux/slice/countrySlice";
 import favoriteReducer from "../redux/slice/favoriteSlice";
 import countryDetailReducer from "./slice/countryDetailSlice";
-
+// store
 const store = configureStore({
   reducer: {
     country: countryReducer,
@@ -13,6 +13,7 @@ const store = configureStore({
     countryDetail: countryDetailReducer,
   },
 });
+// type
 export type RootState = ReturnType<typeof store.getState>;
 export type Appdispatch = typeof store.dispatch;
 

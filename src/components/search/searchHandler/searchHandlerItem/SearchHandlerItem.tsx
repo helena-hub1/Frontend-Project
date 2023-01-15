@@ -30,11 +30,9 @@ const TableRowStyled = styled(TableRow)`
   }
 `;
 const SearchHandlerItem = ({ item }: Prop) => {
+  // state
   const favoriteList = useSelector(
     (state: RootState) => state.favorite.favoriteList
-  );
-  let isFavorite = favoriteList.some(
-    (favitem) => favitem.name.common === item.name.common
   );
   const [open, setOpen] = useState(false);
   const handleClick = () => {
@@ -49,15 +47,21 @@ const SearchHandlerItem = ({ item }: Prop) => {
     }
     setOpen(false);
   };
+  const isFavorite = favoriteList.some(
+    (favitem) => favitem.name.common === item.name.common
+  );
   const dispatch = useDispatch();
+  // Add to fav
   const addToFavoriteHandler = () => {
     dispatch(favoriteActions.addFavoriteCountry(item));
     handleClick();
   };
+  // Remove fav
   const removeFromFavoriteHandler = () => {
     dispatch(favoriteActions.removeFavriteCountry(item));
     handleClick();
   };
+  // render
   return (
     <Fragment>
       <TableRow sx={{ background: "rgb(180, 115, 115)", mt: 1 }}>

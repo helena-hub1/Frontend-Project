@@ -37,6 +37,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 const CountryDetail = () => {
+  // state
   const countryDetail = useSelector(
     (state: RootState) => state.countryDetail.countryDetail
   );
@@ -46,16 +47,20 @@ const CountryDetail = () => {
     setExpanded(!expanded);
   };
   const dispatch = useDispatch<Appdispatch>();
+  // useParams
   const { name } = useParams<Params>();
   useEffect(() => {
     dispatch(getCountryDetailData(name));
   }, [dispatch, name]);
-
+  // render
   return (
     <div className="country_detail">
       {countryDetail.map((item, index) => {
         return (
-          <Card key={index} sx={{ maxWidth: 345, width: "80%", ml: 43, mt: 5 }}>
+          <Card
+            key={index}
+            sx={{ maxWidth: 345, width: "80%", ml: 40, mt: 10 }}
+          >
             <CardHeader
               avatar={
                 <Avatar sx={{ bgcolor: red[400] }} aria-label="country">

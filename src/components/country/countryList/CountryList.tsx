@@ -14,17 +14,14 @@ import getCountryData from "../../../thunk/country";
 import { RootState, Appdispatch } from "../../../redux/store";
 import CountryItem from "../countryItem/CountryItem";
 import Loading from "../../loading/Loading";
-import Country from "../../../types/type";
-
-type OrderBy = "asc" | "desc";
+import { countryListActions } from "src/redux/slice/countrySlice";
 
 const CountryList = () => {
+  // state
   const countryList = useSelector(
     (state: RootState) => state.country.countryList
   );
   const isLoading = useSelector((state: RootState) => state.country.isLoading);
-  const [sortCountryData, setSortCountryData] =
-    useState<Country[]>(countryList);
   const [orderDirection, setOrderDirection] = useState<"asc" | "desc">("asc");
 
   const dispatch = useDispatch<Appdispatch>();
@@ -32,33 +29,17 @@ const CountryList = () => {
   useEffect(() => {
     dispatch(getCountryData());
   }, [dispatch]);
-
-  const sortData = (countryData: Country[], orderBy: OrderBy) => {
-    switch (orderBy) {
-      default:
-      case "asc":
-        return countryData.sort((a, b) =>
-          a.name.common > b.name.common
-            ? 1
-            : b.name.common > a.name.common
-            ? -1
-            : 0
-        );
-      case "desc":
-        return countryData.sort((a, b) =>
-          a.name.common < b.name.common
-            ? 1
-            : b.name.common < a.name.common
-            ? -1
-            : 0
-        );
-    }
-  };
-  const dataForSort = [...countryList];
-  const onSortClickHandler = () => {
-    setSortCountryData(sortData(dataForSort, orderDirection));
+  // sorting ascending
+  const onAscendingSortHandler = () => {
+    dispatch(countryListActions.sortAscending());
     setOrderDirection(orderDirection === "asc" ? "desc" : "asc");
   };
+  // soring descending
+  const onDecendingSortHandler = () => {
+    dispatch(countryListActions.sortDescending());
+    setOrderDirection(orderDirection === "asc" ? "desc" : "asc");
+  };
+  // loading
   if (isLoading) {
     return (
       <div>
@@ -66,12 +47,13 @@ const CountryList = () => {
       </div>
     );
   }
+  // render
   return (
     <div className="country_list">
       <Typography variant="h5" sx={{ textAlign: "center", mt: 14 }}>
         Country List
       </Typography>
-      <TableContainer component={Paper} sx={{ mt: 4, ml: 12, width: "80%" }}>
+      <TableContainer component={Paper} sx={{ mt: 4, ml: 13, width: "80%" }}>
         <Table
           sx={{ minWidth: 700 }}
           aria-label="customized table"
@@ -81,7 +63,11 @@ const CountryList = () => {
             <TableRow>
               <TableCell sx={{ fontWeight: "bold" }}>Flag</TableCell>
               <TableCell
-                onClick={onSortClickHandler}
+                onClick={
+                  orderDirection === "asc"
+                    ? onAscendingSortHandler
+                    : onDecendingSortHandler
+                }
                 align="center"
                 sx={{ fontWeight: "bold" }}
               >
@@ -103,7 +89,7 @@ const CountryList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sortCountryData.map((item, index) => (
+            {countryList.map((item, index) => (
               <CountryItem key={index} item={item} />
             ))}
           </TableBody>

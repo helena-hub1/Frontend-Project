@@ -14,6 +14,7 @@ import Country from "../../../types/type";
 import { RootState } from "../../../redux/store";
 import { favoriteActions } from "../../../redux/slice/favoriteSlice";
 
+// type
 type Prop = {
   item: Country;
 };
@@ -48,14 +49,17 @@ const CountryItem = ({ item }: Prop) => {
   const isFavorite = favoriteList.some(
     (favitem) => favitem.name.common === item.name.common
   );
+  // add to fav
   const addToFavCountryHandler = () => {
     dispatch(favoriteActions.addFavoriteCountry(item));
     handleClick();
   };
+  // remove from fav
   const removeFavCountryHandler = () => {
     dispatch(favoriteActions.removeFavriteCountry(item));
     handleClick();
   };
+  // render
   return (
     <Fragment>
       <StyledTableRow>

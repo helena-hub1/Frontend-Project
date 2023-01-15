@@ -9,6 +9,7 @@ const styles = {
   },
 };
 const FootBar = () => {
+  // render
   return (
     <Box className="foot_bar" sx={{ flexGrow: 1, m: 1 }}>
       <AppBar
